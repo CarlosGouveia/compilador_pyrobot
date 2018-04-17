@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">Home</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="masthead text-center text-white d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h1><strong>Compiladores</strong></h1>
+                    <hr>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{% url 'core:cpfview' %}">Validar CPF</a>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{% url 'core:posview' %}">Gerar expressão Pós-Fixa</a>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{% url 'core:compiladorview' %}">Compilador PyRobot</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}

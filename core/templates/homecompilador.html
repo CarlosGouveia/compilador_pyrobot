@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block teste %}
+
+    <link href="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js">
+
+    <style>
+        body {
+            background: #eeeeee;
+            font: 200 1.5em/1.75em "Helvetica Neue", Helvetica, sans-serif;
+            width: 775px;
+            margin: auto;
+            padding-top: 50px;
+            padding-bottom: 100px;
+            color: #555555;
+        }
+
+        h1 {
+            font: bold 2em/1em "Optima", serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            padding-bottom: 25px;
+            text-shadow: 0 -1px 1px white, 0 1px 0 #999;
+        }
+
+        p {
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin: 0;
+            text-shadow: 0 -1px 1px white, 0 1px 0 #999;
+        }
+
+        b {
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 755px;
+            height: 370px;
+            font-size: 20px;
+            padding: 10px;
+            line-height: 30px;
+            border-radius: 3px;
+            border: 1px solid #aaaaaa;
+
+        }
+
+        code {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 17px;
+            padding: 10px;
+            line-height: 24px;
+            background-color: #cccccc;
+            color: #000000;
+            border-radius: 3px;
+            border: 1px solid #aaaaaa;
+        }
+
+        h2 a {
+            color: #555;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+        }
+
+        h2 a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin: 0;
+            padding: 0;
+            padding-top: 30px;
+        }
+
+        h3 {
+            font-size: .6em;
+            text-align: center;
+            font-weight: 200;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+{% endblock %}
+
+{% block content %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" style="color: red" href="{% url 'core:home' %}">Home</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">PyRobot - Análise Léxica</h2>
+                <hr class="my-4">
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-lg-12">
+
+                <form action="{% url 'core:compilador' %}" method="post">
+                    {% csrf_token %}
+
+                    <textarea name="codigo" rows="10" id="line_numbers"></textarea><br>
+
+                    <div class="form-row justify-content-center text-center">
+                        <div class="form-group col-md-3">
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" type="submit">Compilar</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-lg-12">
+
+                <textarea id="mostrar" rows="10" readonly></textarea>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'numbers/jquery-linenumbers.js' %}"></script>
+    <script>
+        $('document').ready(function () {
+            $('#mostrar').text("{{ resposta|safe }}");
+
+            $('#line_numbers').linenumbers({col_width: '15px'});
+
+            $('#line_numbers').text("{{ codigo|safe }}");
+        })
+    </script>
+{% endblock %}
+
