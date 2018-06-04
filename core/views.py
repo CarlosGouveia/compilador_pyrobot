@@ -3,6 +3,7 @@ import ply.lex as lex
 from django.shortcuts import render, redirect
 from .forms import cpf_form, expressao_form, compilador_form
 from django.contrib import messages
+from django.core.files.uploadedfile import UploadedFile
 
 def home(request):
     return render(request, 'home.html')
@@ -206,8 +207,17 @@ def compilar(request):
     context = {}
     lista = []
 
+    # arquivo = UploadedFile(open('static/arquivo.txt', 'r'), 'arquivo.txt')
+    # unica_linha = arquivo.read()
+    # arquivo.close()
+
+    # print(unica_linha)
+
     if request.method == 'POST':
         codigo = request.POST.get('codigo')
+
+        # print(type(codigo))
+        # print(codigo)
 
         reserved = {
             'begin': 'ini_code',
@@ -234,6 +244,7 @@ def compilar(request):
                      'tip_bool',
                      'tipo_var',
                      'numero',
+                     'string',
                      'atribuir',
                      'variavel',
                      'dir_robo',
@@ -242,6 +253,7 @@ def compilar(request):
                  ] + list(reserved.values())
 
         t_comentario = r"[\/][\*]+[\w\W]+[\*]+[\/]"
+        t_string = r"[\"]+[\w\W]+[\"]"
         t_a_parente = r"\("
         t_f_parente = r"\)"
         t_op_relacional = r"((<=){1})|((>=){1})|((==){1})|((!=){1})|((<){1})|((>){1})"
@@ -266,12 +278,12 @@ def compilar(request):
 
         # Regra para quebra de linhas(rastrear)
         def t_newline(t):
+            # t.lexer.lineno = 0
             r'\n+'
             t.lexer.lineno += len(t.value)
 
         # Uma string contendo caracteres ignorados (espaços e tabulações)
         t_ignore = ' \t\r'
-        # t_ignore =
 
         # Erro ao manipular regra
         def t_error(t):
@@ -283,17 +295,23 @@ def compilar(request):
         # Constrói o lexer
         lexer = lex.lex()
 
-        lexer.input(codigo)
+        code = codigo.split('\r')
 
-        # Tokenize
-        while True:
-            tok = lexer.token()
-            token = ''
-            if not tok:
-                break
-            # print(tok)
-            # token = "Token: {0}, '{1}' encontrado na linha {2} coluna {3}".format(tok.type,tok.value,tok.lineno,tok.lexpos)
-            lista.append(str(tok))
+        for i in range(len(code)):
+            # print(code[i])
+            lexer.input(code[i])
+
+            # Tokenize
+            while True:
+
+                tok = lexer.token()
+                # print(tok)
+                token = ''
+                if tok:
+                    lista.append(str(tok))
+                else:
+                    break
+
 
     context['resposta'] = "\\n".join(lista)
     l = ""
@@ -308,5 +326,3 @@ def compilar(request):
     context['codigo'] = l
     template_name = 'homecompilador.html'
     return render(request, template_name, context)
-
-

@@ -1,0 +1,2 @@
+int var_1;
+int var_2;
