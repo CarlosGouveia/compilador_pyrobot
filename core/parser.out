@@ -1,105 +1,136 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    NUM_FLOAT
-    EXIBA
-    STRING
-    COMENTARIO
-
 Grammar
 
 Rule 0     S' -> programa
 Rule 1     programa -> INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE
 Rule 2     programa -> INI_CODE A_CHAVES empty F_CHAVES FIM_CODE
-Rule 3     corpo -> declaracao
-Rule 4     corpo -> atribuicao
-Rule 5     corpo -> loop
-Rule 6     corpo -> direcao
-Rule 7     corpo -> movimenta
-Rule 8     corpo -> iniciarobo
-Rule 9     corpo -> break
-Rule 10    corpo -> condicional
-Rule 11    corpo -> parar
-Rule 12    corpo1 -> declaracao
-Rule 13    corpo1 -> atribuicao
-Rule 14    corpo1 -> loop
-Rule 15    corpo1 -> direcao
-Rule 16    corpo1 -> movimenta
-Rule 17    corpo1 -> break
-Rule 18    corpo1 -> condicional
-Rule 19    corpo1 -> parar
-Rule 20    empty -> <empty>
-Rule 21    listacorpo -> corpo
-Rule 22    listacorpo -> corpo listacorpo
-Rule 23    listacorpo1 -> corpo1
-Rule 24    listacorpo1 -> corpo1 listacorpo1
-Rule 25    declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA
-Rule 26    atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-Rule 27    expressao -> expressao OP_ARITMETICO expressao
-Rule 28    expressao -> NUMERO
-Rule 29    expressao -> VARIAVEL
-Rule 30    loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-Rule 31    loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-Rule 32    comparacao -> VARIAVEL OP_RELACIONAL NUMERO
-Rule 33    comparacao -> VARIAVEL OP_RELACIONAL VARIAVEL
-Rule 34    condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-Rule 35    condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-Rule 36    iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-Rule 37    break -> BREAK QUEBRA_LINHA
-Rule 38    direcao -> DIR_ROBO QUEBRA_LINHA
-Rule 39    parar -> PARAR QUEBRA_LINHA
-Rule 40    movimenta -> MOVE_ROBO QUEBRA_LINHA
+Rule 3     programa -> comentario
+Rule 4     corpo -> declaracao
+Rule 5     corpo -> atribuicao
+Rule 6     corpo -> loop
+Rule 7     corpo -> direcao
+Rule 8     corpo -> movimenta
+Rule 9     corpo -> iniciarobo
+Rule 10    corpo -> break
+Rule 11    corpo -> condicional
+Rule 12    corpo -> parar
+Rule 13    corpo -> mostrar
+Rule 14    corpo -> comentario
+Rule 15    corpo_robo_on -> declaracao
+Rule 16    corpo_robo_on -> atribuicao
+Rule 17    corpo_robo_on -> loop_robo_on
+Rule 18    corpo_robo_on -> direcao
+Rule 19    corpo_robo_on -> movimenta
+Rule 20    corpo_robo_on -> break
+Rule 21    corpo_robo_on -> condicional_robo_on
+Rule 22    corpo_robo_on -> parar
+Rule 23    corpo_robo_on -> mostrar
+Rule 24    corpo_robo_on -> comentario
+Rule 25    empty -> <empty>
+Rule 26    listacorpo -> corpo
+Rule 27    listacorpo -> corpo listacorpo
+Rule 28    listacorpo_robo_on -> corpo_robo_on
+Rule 29    listacorpo_robo_on -> corpo_robo_on listacorpo_robo_on
+Rule 30    declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA
+Rule 31    atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+Rule 32    atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+Rule 33    atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+Rule 34    atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+Rule 35    operacao -> expressao OP_ARITMETICO expressao
+Rule 36    operacao -> expressao OP_ARITMETICO operacao
+Rule 37    expressao -> NUMERO
+Rule 38    expressao -> NUM_FLOAT
+Rule 39    expressao -> VARIAVEL
+Rule 40    expressao_str -> STRING
+Rule 41    booleano -> TIPO_BOOL
+Rule 42    loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+Rule 43    loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+Rule 44    loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+Rule 45    loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+Rule 46    loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+Rule 47    loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+Rule 48    loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+Rule 49    loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+Rule 50    comparacao -> VARIAVEL OP_RELACIONAL NUMERO
+Rule 51    comparacao -> VARIAVEL OP_RELACIONAL VARIAVEL
+Rule 52    comparacao -> VARIAVEL OP_RELACIONAL NUM_FLOAT
+Rule 53    comparacao -> VARIAVEL OP_RELACIONAL TIPO_BOOL
+Rule 54    condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+Rule 55    condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+Rule 56    condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+Rule 57    condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+Rule 58    condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+Rule 59    condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+Rule 60    condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+Rule 61    condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+Rule 62    iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+Rule 63    iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+Rule 64    break -> BREAK QUEBRA_LINHA
+Rule 65    direcao -> DIR_ROBO QUEBRA_LINHA
+Rule 66    parar -> PARAR QUEBRA_LINHA
+Rule 67    movimenta -> MOVE_ROBO QUEBRA_LINHA
+Rule 68    mostrar -> EXIBA STRING QUEBRA_LINHA
+Rule 69    mostrar -> EXIBA VARIAVEL QUEBRA_LINHA
+Rule 70    mostrar -> EXIBA NUMERO QUEBRA_LINHA
+Rule 71    comentario -> COMENTARIO
 
 Terminals, with rules where they appear
 
-ATRIBUIR             : 26
-A_CHAVES             : 1 2 30 31 34 35 35
-A_PARENTE            : 30 31 34 35
-BREAK                : 37
-COMENTARIO           : 
-DESLIGA_ROBO         : 36
-DIR_ROBO             : 38
-ELSE                 : 35
-EXIBA                : 
+ATRIBUIR             : 31 32 33 34
+A_CHAVES             : 1 2 42 43 44 45 46 47 48 49 54 55 55 56 57 57 58 59 59 60 61 61
+A_PARENTE            : 42 43 44 45 46 47 48 49 54 55 56 57 58 59 60 61
+BREAK                : 64
+COMENTARIO           : 71
+DESLIGA_ROBO         : 62 63
+DIR_ROBO             : 65
+ELSE                 : 55 57 59 61
+EXIBA                : 68 69 70
 FIM_CODE             : 1 2
-F_CHAVES             : 1 2 30 31 34 35 35
-F_PARENTE            : 30 31 34 35
-IF                   : 34 35
+F_CHAVES             : 1 2 42 43 44 45 46 47 48 49 54 55 55 56 57 57 58 59 59 60 61 61
+F_PARENTE            : 42 43 44 45 46 47 48 49 54 55 56 57 58 59 60 61
+IF                   : 54 55 56 57 58 59 60 61
 INI_CODE             : 1 2
-LIGA_ROBO            : 36
-MOVE_ROBO            : 40
-NUMERO               : 28 32
-NUM_FLOAT            : 
-OP_ARITMETICO        : 27
-OP_RELACIONAL        : 32 33
-PARAR                : 39
-QUEBRA_LINHA         : 25 26 36 36 37 38 39 40
-STRING               : 
-TIPO_BOOL            : 31
-TIPO_VAR             : 25
-VARIAVEL             : 25 26 29 32 33 33
-WHILE                : 30 31
+LIGA_ROBO            : 62 63
+MOVE_ROBO            : 67
+NUMERO               : 37 50 70
+NUM_FLOAT            : 38 52
+OP_ARITMETICO        : 35 36
+OP_RELACIONAL        : 50 51 52 53
+PARAR                : 66
+QUEBRA_LINHA         : 30 31 32 33 34 62 62 63 63 64 65 66 67 68 69 70
+STRING               : 40 68
+TIPO_BOOL            : 41 43 45 47 49 53
+TIPO_VAR             : 30
+VARIAVEL             : 30 31 32 33 34 39 50 51 51 52 53 69
+WHILE                : 42 43 44 45 46 47 48 49
 error                : 
 
 Nonterminals, with rules where they appear
 
-atribuicao           : 4 13
-break                : 9 17
-comparacao           : 30 34 35
-condicional          : 10 18
-corpo                : 21 22
-corpo1               : 23 24
-declaracao           : 3 12
-direcao              : 6 15
-empty                : 2
-expressao            : 26 27 27
-iniciarobo           : 8
-listacorpo           : 1 22 30 31 34 35 35
-listacorpo1          : 24 36
-loop                 : 5 14
-movimenta            : 7 16
-parar                : 11 19
+atribuicao           : 5 16
+booleano             : 34
+break                : 10 20
+comentario           : 3 14 24
+comparacao           : 42 44 46 48 54 55 56 57 58 59 60 61
+condicional          : 11
+condicional_robo_on  : 21
+corpo                : 26 27
+corpo_robo_on        : 28 29
+declaracao           : 4 15
+direcao              : 7 18
+empty                : 2 44 45 48 49 56 57 57 60 61 61 63
+expressao            : 33 35 35 36
+expressao_str        : 32
+iniciarobo           : 9
+listacorpo           : 1 27 42 43 54 55 55
+listacorpo_robo_on   : 29 46 47 58 59 59 62
+loop                 : 6
+loop_robo_on         : 17
+mostrar              : 13 23
+movimenta            : 8 19
+operacao             : 31 36
+parar                : 12 22
 programa             : 0
 
 Parsing method: LALR
@@ -109,10 +140,14 @@ state 0
     (0) S' -> . programa
     (1) programa -> . INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE
     (2) programa -> . INI_CODE A_CHAVES empty F_CHAVES FIM_CODE
+    (3) programa -> . comentario
+    (71) comentario -> . COMENTARIO
 
     INI_CODE        shift and go to state 2
+    COMENTARIO      shift and go to state 3
 
     programa                       shift and go to state 1
+    comentario                     shift and go to state 4
 
 state 1
 
@@ -125,1183 +160,2497 @@ state 2
     (1) programa -> INI_CODE . A_CHAVES listacorpo F_CHAVES FIM_CODE
     (2) programa -> INI_CODE . A_CHAVES empty F_CHAVES FIM_CODE
 
-    A_CHAVES        shift and go to state 3
+    A_CHAVES        shift and go to state 5
 
 
 state 3
 
-    (1) programa -> INI_CODE A_CHAVES . listacorpo F_CHAVES FIM_CODE
-    (2) programa -> INI_CODE A_CHAVES . empty F_CHAVES FIM_CODE
-    (21) listacorpo -> . corpo
-    (22) listacorpo -> . corpo listacorpo
-    (20) empty -> .
-    (3) corpo -> . declaracao
-    (4) corpo -> . atribuicao
-    (5) corpo -> . loop
-    (6) corpo -> . direcao
-    (7) corpo -> . movimenta
-    (8) corpo -> . iniciarobo
-    (9) corpo -> . break
-    (10) corpo -> . condicional
-    (11) corpo -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (36) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (71) comentario -> COMENTARIO .
 
-    F_CHAVES        reduce using rule 20 (empty -> .)
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    LIGA_ROBO       shift and go to state 16
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    TIPO_VAR        reduce using rule 71 (comentario -> COMENTARIO .)
+    VARIAVEL        reduce using rule 71 (comentario -> COMENTARIO .)
+    WHILE           reduce using rule 71 (comentario -> COMENTARIO .)
+    DIR_ROBO        reduce using rule 71 (comentario -> COMENTARIO .)
+    MOVE_ROBO       reduce using rule 71 (comentario -> COMENTARIO .)
+    BREAK           reduce using rule 71 (comentario -> COMENTARIO .)
+    IF              reduce using rule 71 (comentario -> COMENTARIO .)
+    PARAR           reduce using rule 71 (comentario -> COMENTARIO .)
+    EXIBA           reduce using rule 71 (comentario -> COMENTARIO .)
+    COMENTARIO      reduce using rule 71 (comentario -> COMENTARIO .)
+    DESLIGA_ROBO    reduce using rule 71 (comentario -> COMENTARIO .)
+    F_CHAVES        reduce using rule 71 (comentario -> COMENTARIO .)
+    LIGA_ROBO       reduce using rule 71 (comentario -> COMENTARIO .)
+    $end            reduce using rule 71 (comentario -> COMENTARIO .)
 
-    listacorpo                     shift and go to state 5
-    loop                           shift and go to state 6
-    movimenta                      shift and go to state 7
-    atribuicao                     shift and go to state 8
-    iniciarobo                     shift and go to state 19
-    condicional                    shift and go to state 10
-    empty                          shift and go to state 12
-    break                          shift and go to state 20
-    direcao                        shift and go to state 21
-    corpo                          shift and go to state 22
-    parar                          shift and go to state 24
-    declaracao                     shift and go to state 17
 
 state 4
 
-    (30) loop -> WHILE . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> WHILE . A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (3) programa -> comentario .
 
-    A_PARENTE       shift and go to state 25
+    $end            reduce using rule 3 (programa -> comentario .)
 
 
 state 5
 
-    (1) programa -> INI_CODE A_CHAVES listacorpo . F_CHAVES FIM_CODE
+    (1) programa -> INI_CODE A_CHAVES . listacorpo F_CHAVES FIM_CODE
+    (2) programa -> INI_CODE A_CHAVES . empty F_CHAVES FIM_CODE
+    (26) listacorpo -> . corpo
+    (27) listacorpo -> . corpo listacorpo
+    (25) empty -> .
+    (4) corpo -> . declaracao
+    (5) corpo -> . atribuicao
+    (6) corpo -> . loop
+    (7) corpo -> . direcao
+    (8) corpo -> . movimenta
+    (9) corpo -> . iniciarobo
+    (10) corpo -> . break
+    (11) corpo -> . condicional
+    (12) corpo -> . parar
+    (13) corpo -> . mostrar
+    (14) corpo -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (42) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (62) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (54) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
 
-    F_CHAVES        shift and go to state 26
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 22
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    LIGA_ROBO       shift and go to state 6
+    BREAK           shift and go to state 12
+    IF              shift and go to state 9
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
 
+    iniciarobo                     shift and go to state 7
+    condicional                    shift and go to state 18
+    listacorpo                     shift and go to state 14
+    direcao                        shift and go to state 23
+    declaracao                     shift and go to state 15
+    mostrar                        shift and go to state 27
+    parar                          shift and go to state 25
+    movimenta                      shift and go to state 26
+    break                          shift and go to state 16
+    loop                           shift and go to state 28
+    atribuicao                     shift and go to state 29
+    empty                          shift and go to state 10
+    corpo                          shift and go to state 11
+    comentario                     shift and go to state 8
 
 state 6
 
-    (5) corpo -> loop .
-
-    TIPO_VAR        reduce using rule 5 (corpo -> loop .)
-    VARIAVEL        reduce using rule 5 (corpo -> loop .)
-    WHILE           reduce using rule 5 (corpo -> loop .)
-    DIR_ROBO        reduce using rule 5 (corpo -> loop .)
-    MOVE_ROBO       reduce using rule 5 (corpo -> loop .)
-    LIGA_ROBO       reduce using rule 5 (corpo -> loop .)
-    BREAK           reduce using rule 5 (corpo -> loop .)
-    IF              reduce using rule 5 (corpo -> loop .)
-    PARAR           reduce using rule 5 (corpo -> loop .)
-    F_CHAVES        reduce using rule 5 (corpo -> loop .)
-
-
-state 7
-
-    (7) corpo -> movimenta .
-
-    TIPO_VAR        reduce using rule 7 (corpo -> movimenta .)
-    VARIAVEL        reduce using rule 7 (corpo -> movimenta .)
-    WHILE           reduce using rule 7 (corpo -> movimenta .)
-    DIR_ROBO        reduce using rule 7 (corpo -> movimenta .)
-    MOVE_ROBO       reduce using rule 7 (corpo -> movimenta .)
-    LIGA_ROBO       reduce using rule 7 (corpo -> movimenta .)
-    BREAK           reduce using rule 7 (corpo -> movimenta .)
-    IF              reduce using rule 7 (corpo -> movimenta .)
-    PARAR           reduce using rule 7 (corpo -> movimenta .)
-    F_CHAVES        reduce using rule 7 (corpo -> movimenta .)
-
-
-state 8
-
-    (4) corpo -> atribuicao .
-
-    TIPO_VAR        reduce using rule 4 (corpo -> atribuicao .)
-    VARIAVEL        reduce using rule 4 (corpo -> atribuicao .)
-    WHILE           reduce using rule 4 (corpo -> atribuicao .)
-    DIR_ROBO        reduce using rule 4 (corpo -> atribuicao .)
-    MOVE_ROBO       reduce using rule 4 (corpo -> atribuicao .)
-    LIGA_ROBO       reduce using rule 4 (corpo -> atribuicao .)
-    BREAK           reduce using rule 4 (corpo -> atribuicao .)
-    IF              reduce using rule 4 (corpo -> atribuicao .)
-    PARAR           reduce using rule 4 (corpo -> atribuicao .)
-    F_CHAVES        reduce using rule 4 (corpo -> atribuicao .)
-
-
-state 9
-
-    (37) break -> BREAK . QUEBRA_LINHA
-
-    QUEBRA_LINHA    shift and go to state 27
-
-
-state 10
-
-    (10) corpo -> condicional .
-
-    TIPO_VAR        reduce using rule 10 (corpo -> condicional .)
-    VARIAVEL        reduce using rule 10 (corpo -> condicional .)
-    WHILE           reduce using rule 10 (corpo -> condicional .)
-    DIR_ROBO        reduce using rule 10 (corpo -> condicional .)
-    MOVE_ROBO       reduce using rule 10 (corpo -> condicional .)
-    LIGA_ROBO       reduce using rule 10 (corpo -> condicional .)
-    BREAK           reduce using rule 10 (corpo -> condicional .)
-    IF              reduce using rule 10 (corpo -> condicional .)
-    PARAR           reduce using rule 10 (corpo -> condicional .)
-    F_CHAVES        reduce using rule 10 (corpo -> condicional .)
-
-
-state 11
-
-    (26) atribuicao -> VARIAVEL . ATRIBUIR expressao QUEBRA_LINHA
-
-    ATRIBUIR        shift and go to state 28
-
-
-state 12
-
-    (2) programa -> INI_CODE A_CHAVES empty . F_CHAVES FIM_CODE
-
-    F_CHAVES        shift and go to state 29
-
-
-state 13
-
-    (40) movimenta -> MOVE_ROBO . QUEBRA_LINHA
+    (62) iniciarobo -> LIGA_ROBO . QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> LIGA_ROBO . QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
 
     QUEBRA_LINHA    shift and go to state 30
 
 
-state 14
+state 7
 
-    (34) condicional -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (9) corpo -> iniciarobo .
+
+    TIPO_VAR        reduce using rule 9 (corpo -> iniciarobo .)
+    VARIAVEL        reduce using rule 9 (corpo -> iniciarobo .)
+    WHILE           reduce using rule 9 (corpo -> iniciarobo .)
+    DIR_ROBO        reduce using rule 9 (corpo -> iniciarobo .)
+    MOVE_ROBO       reduce using rule 9 (corpo -> iniciarobo .)
+    LIGA_ROBO       reduce using rule 9 (corpo -> iniciarobo .)
+    BREAK           reduce using rule 9 (corpo -> iniciarobo .)
+    IF              reduce using rule 9 (corpo -> iniciarobo .)
+    PARAR           reduce using rule 9 (corpo -> iniciarobo .)
+    EXIBA           reduce using rule 9 (corpo -> iniciarobo .)
+    COMENTARIO      reduce using rule 9 (corpo -> iniciarobo .)
+    F_CHAVES        reduce using rule 9 (corpo -> iniciarobo .)
+
+
+state 8
+
+    (14) corpo -> comentario .
+
+    TIPO_VAR        reduce using rule 14 (corpo -> comentario .)
+    VARIAVEL        reduce using rule 14 (corpo -> comentario .)
+    WHILE           reduce using rule 14 (corpo -> comentario .)
+    DIR_ROBO        reduce using rule 14 (corpo -> comentario .)
+    MOVE_ROBO       reduce using rule 14 (corpo -> comentario .)
+    LIGA_ROBO       reduce using rule 14 (corpo -> comentario .)
+    BREAK           reduce using rule 14 (corpo -> comentario .)
+    IF              reduce using rule 14 (corpo -> comentario .)
+    PARAR           reduce using rule 14 (corpo -> comentario .)
+    EXIBA           reduce using rule 14 (corpo -> comentario .)
+    COMENTARIO      reduce using rule 14 (corpo -> comentario .)
+    F_CHAVES        reduce using rule 14 (corpo -> comentario .)
+
+
+state 9
+
+    (54) condicional -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
 
     A_PARENTE       shift and go to state 31
 
 
+state 10
+
+    (2) programa -> INI_CODE A_CHAVES empty . F_CHAVES FIM_CODE
+
+    F_CHAVES        shift and go to state 32
+
+
+state 11
+
+    (26) listacorpo -> corpo .
+    (27) listacorpo -> corpo . listacorpo
+    (26) listacorpo -> . corpo
+    (27) listacorpo -> . corpo listacorpo
+    (4) corpo -> . declaracao
+    (5) corpo -> . atribuicao
+    (6) corpo -> . loop
+    (7) corpo -> . direcao
+    (8) corpo -> . movimenta
+    (9) corpo -> . iniciarobo
+    (10) corpo -> . break
+    (11) corpo -> . condicional
+    (12) corpo -> . parar
+    (13) corpo -> . mostrar
+    (14) corpo -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (42) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (62) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (54) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 26 (listacorpo -> corpo .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 22
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    LIGA_ROBO       shift and go to state 6
+    BREAK           shift and go to state 12
+    IF              shift and go to state 9
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    iniciarobo                     shift and go to state 7
+    condicional                    shift and go to state 18
+    listacorpo                     shift and go to state 33
+    direcao                        shift and go to state 23
+    declaracao                     shift and go to state 15
+    mostrar                        shift and go to state 27
+    parar                          shift and go to state 25
+    movimenta                      shift and go to state 26
+    break                          shift and go to state 16
+    loop                           shift and go to state 28
+    atribuicao                     shift and go to state 29
+    comentario                     shift and go to state 8
+    corpo                          shift and go to state 11
+
+state 12
+
+    (64) break -> BREAK . QUEBRA_LINHA
+
+    QUEBRA_LINHA    shift and go to state 34
+
+
+state 13
+
+    (65) direcao -> DIR_ROBO . QUEBRA_LINHA
+
+    QUEBRA_LINHA    shift and go to state 35
+
+
+state 14
+
+    (1) programa -> INI_CODE A_CHAVES listacorpo . F_CHAVES FIM_CODE
+
+    F_CHAVES        shift and go to state 36
+
+
 state 15
 
-    (39) parar -> PARAR . QUEBRA_LINHA
+    (4) corpo -> declaracao .
 
-    QUEBRA_LINHA    shift and go to state 32
+    TIPO_VAR        reduce using rule 4 (corpo -> declaracao .)
+    VARIAVEL        reduce using rule 4 (corpo -> declaracao .)
+    WHILE           reduce using rule 4 (corpo -> declaracao .)
+    DIR_ROBO        reduce using rule 4 (corpo -> declaracao .)
+    MOVE_ROBO       reduce using rule 4 (corpo -> declaracao .)
+    LIGA_ROBO       reduce using rule 4 (corpo -> declaracao .)
+    BREAK           reduce using rule 4 (corpo -> declaracao .)
+    IF              reduce using rule 4 (corpo -> declaracao .)
+    PARAR           reduce using rule 4 (corpo -> declaracao .)
+    EXIBA           reduce using rule 4 (corpo -> declaracao .)
+    COMENTARIO      reduce using rule 4 (corpo -> declaracao .)
+    F_CHAVES        reduce using rule 4 (corpo -> declaracao .)
 
 
 state 16
 
-    (36) iniciarobo -> LIGA_ROBO . QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
+    (10) corpo -> break .
 
-    QUEBRA_LINHA    shift and go to state 33
+    TIPO_VAR        reduce using rule 10 (corpo -> break .)
+    VARIAVEL        reduce using rule 10 (corpo -> break .)
+    WHILE           reduce using rule 10 (corpo -> break .)
+    DIR_ROBO        reduce using rule 10 (corpo -> break .)
+    MOVE_ROBO       reduce using rule 10 (corpo -> break .)
+    LIGA_ROBO       reduce using rule 10 (corpo -> break .)
+    BREAK           reduce using rule 10 (corpo -> break .)
+    IF              reduce using rule 10 (corpo -> break .)
+    PARAR           reduce using rule 10 (corpo -> break .)
+    EXIBA           reduce using rule 10 (corpo -> break .)
+    COMENTARIO      reduce using rule 10 (corpo -> break .)
+    F_CHAVES        reduce using rule 10 (corpo -> break .)
 
 
 state 17
 
-    (3) corpo -> declaracao .
+    (30) declaracao -> TIPO_VAR . VARIAVEL QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 3 (corpo -> declaracao .)
-    VARIAVEL        reduce using rule 3 (corpo -> declaracao .)
-    WHILE           reduce using rule 3 (corpo -> declaracao .)
-    DIR_ROBO        reduce using rule 3 (corpo -> declaracao .)
-    MOVE_ROBO       reduce using rule 3 (corpo -> declaracao .)
-    LIGA_ROBO       reduce using rule 3 (corpo -> declaracao .)
-    BREAK           reduce using rule 3 (corpo -> declaracao .)
-    IF              reduce using rule 3 (corpo -> declaracao .)
-    PARAR           reduce using rule 3 (corpo -> declaracao .)
-    F_CHAVES        reduce using rule 3 (corpo -> declaracao .)
+    VARIAVEL        shift and go to state 37
 
 
 state 18
 
-    (25) declaracao -> TIPO_VAR . VARIAVEL QUEBRA_LINHA
+    (11) corpo -> condicional .
 
-    VARIAVEL        shift and go to state 34
+    TIPO_VAR        reduce using rule 11 (corpo -> condicional .)
+    VARIAVEL        reduce using rule 11 (corpo -> condicional .)
+    WHILE           reduce using rule 11 (corpo -> condicional .)
+    DIR_ROBO        reduce using rule 11 (corpo -> condicional .)
+    MOVE_ROBO       reduce using rule 11 (corpo -> condicional .)
+    LIGA_ROBO       reduce using rule 11 (corpo -> condicional .)
+    BREAK           reduce using rule 11 (corpo -> condicional .)
+    IF              reduce using rule 11 (corpo -> condicional .)
+    PARAR           reduce using rule 11 (corpo -> condicional .)
+    EXIBA           reduce using rule 11 (corpo -> condicional .)
+    COMENTARIO      reduce using rule 11 (corpo -> condicional .)
+    F_CHAVES        reduce using rule 11 (corpo -> condicional .)
 
 
 state 19
 
-    (8) corpo -> iniciarobo .
+    (66) parar -> PARAR . QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 8 (corpo -> iniciarobo .)
-    VARIAVEL        reduce using rule 8 (corpo -> iniciarobo .)
-    WHILE           reduce using rule 8 (corpo -> iniciarobo .)
-    DIR_ROBO        reduce using rule 8 (corpo -> iniciarobo .)
-    MOVE_ROBO       reduce using rule 8 (corpo -> iniciarobo .)
-    LIGA_ROBO       reduce using rule 8 (corpo -> iniciarobo .)
-    BREAK           reduce using rule 8 (corpo -> iniciarobo .)
-    IF              reduce using rule 8 (corpo -> iniciarobo .)
-    PARAR           reduce using rule 8 (corpo -> iniciarobo .)
-    F_CHAVES        reduce using rule 8 (corpo -> iniciarobo .)
+    QUEBRA_LINHA    shift and go to state 38
 
 
 state 20
 
-    (9) corpo -> break .
+    (67) movimenta -> MOVE_ROBO . QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 9 (corpo -> break .)
-    VARIAVEL        reduce using rule 9 (corpo -> break .)
-    WHILE           reduce using rule 9 (corpo -> break .)
-    DIR_ROBO        reduce using rule 9 (corpo -> break .)
-    MOVE_ROBO       reduce using rule 9 (corpo -> break .)
-    LIGA_ROBO       reduce using rule 9 (corpo -> break .)
-    BREAK           reduce using rule 9 (corpo -> break .)
-    IF              reduce using rule 9 (corpo -> break .)
-    PARAR           reduce using rule 9 (corpo -> break .)
-    F_CHAVES        reduce using rule 9 (corpo -> break .)
+    QUEBRA_LINHA    shift and go to state 39
 
 
 state 21
 
-    (6) corpo -> direcao .
+    (31) atribuicao -> VARIAVEL . ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> VARIAVEL . ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> VARIAVEL . ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> VARIAVEL . ATRIBUIR booleano QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 6 (corpo -> direcao .)
-    VARIAVEL        reduce using rule 6 (corpo -> direcao .)
-    WHILE           reduce using rule 6 (corpo -> direcao .)
-    DIR_ROBO        reduce using rule 6 (corpo -> direcao .)
-    MOVE_ROBO       reduce using rule 6 (corpo -> direcao .)
-    LIGA_ROBO       reduce using rule 6 (corpo -> direcao .)
-    BREAK           reduce using rule 6 (corpo -> direcao .)
-    IF              reduce using rule 6 (corpo -> direcao .)
-    PARAR           reduce using rule 6 (corpo -> direcao .)
-    F_CHAVES        reduce using rule 6 (corpo -> direcao .)
+    ATRIBUIR        shift and go to state 40
 
 
 state 22
 
-    (21) listacorpo -> corpo .
-    (22) listacorpo -> corpo . listacorpo
-    (21) listacorpo -> . corpo
-    (22) listacorpo -> . corpo listacorpo
-    (3) corpo -> . declaracao
-    (4) corpo -> . atribuicao
-    (5) corpo -> . loop
-    (6) corpo -> . direcao
-    (7) corpo -> . movimenta
-    (8) corpo -> . iniciarobo
-    (9) corpo -> . break
-    (10) corpo -> . condicional
-    (11) corpo -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (36) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (42) loop -> WHILE . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> WHILE . A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> WHILE . A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> WHILE . A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
 
-    F_CHAVES        reduce using rule 21 (listacorpo -> corpo .)
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    LIGA_ROBO       shift and go to state 16
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    A_PARENTE       shift and go to state 41
 
-    listacorpo                     shift and go to state 35
-    loop                           shift and go to state 6
-    movimenta                      shift and go to state 7
-    atribuicao                     shift and go to state 8
-    iniciarobo                     shift and go to state 19
-    condicional                    shift and go to state 10
-    break                          shift and go to state 20
-    direcao                        shift and go to state 21
-    corpo                          shift and go to state 22
-    declaracao                     shift and go to state 17
-    parar                          shift and go to state 24
 
 state 23
 
-    (38) direcao -> DIR_ROBO . QUEBRA_LINHA
+    (7) corpo -> direcao .
 
-    QUEBRA_LINHA    shift and go to state 36
+    TIPO_VAR        reduce using rule 7 (corpo -> direcao .)
+    VARIAVEL        reduce using rule 7 (corpo -> direcao .)
+    WHILE           reduce using rule 7 (corpo -> direcao .)
+    DIR_ROBO        reduce using rule 7 (corpo -> direcao .)
+    MOVE_ROBO       reduce using rule 7 (corpo -> direcao .)
+    LIGA_ROBO       reduce using rule 7 (corpo -> direcao .)
+    BREAK           reduce using rule 7 (corpo -> direcao .)
+    IF              reduce using rule 7 (corpo -> direcao .)
+    PARAR           reduce using rule 7 (corpo -> direcao .)
+    EXIBA           reduce using rule 7 (corpo -> direcao .)
+    COMENTARIO      reduce using rule 7 (corpo -> direcao .)
+    F_CHAVES        reduce using rule 7 (corpo -> direcao .)
 
 
 state 24
 
-    (11) corpo -> parar .
+    (68) mostrar -> EXIBA . STRING QUEBRA_LINHA
+    (69) mostrar -> EXIBA . VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> EXIBA . NUMERO QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 11 (corpo -> parar .)
-    VARIAVEL        reduce using rule 11 (corpo -> parar .)
-    WHILE           reduce using rule 11 (corpo -> parar .)
-    DIR_ROBO        reduce using rule 11 (corpo -> parar .)
-    MOVE_ROBO       reduce using rule 11 (corpo -> parar .)
-    LIGA_ROBO       reduce using rule 11 (corpo -> parar .)
-    BREAK           reduce using rule 11 (corpo -> parar .)
-    IF              reduce using rule 11 (corpo -> parar .)
-    PARAR           reduce using rule 11 (corpo -> parar .)
-    F_CHAVES        reduce using rule 11 (corpo -> parar .)
+    STRING          shift and go to state 43
+    VARIAVEL        shift and go to state 42
+    NUMERO          shift and go to state 44
 
 
 state 25
 
-    (30) loop -> WHILE A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> WHILE A_PARENTE . TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (32) comparacao -> . VARIAVEL OP_RELACIONAL NUMERO
-    (33) comparacao -> . VARIAVEL OP_RELACIONAL VARIAVEL
+    (12) corpo -> parar .
 
-    TIPO_BOOL       shift and go to state 39
-    VARIAVEL        shift and go to state 37
+    TIPO_VAR        reduce using rule 12 (corpo -> parar .)
+    VARIAVEL        reduce using rule 12 (corpo -> parar .)
+    WHILE           reduce using rule 12 (corpo -> parar .)
+    DIR_ROBO        reduce using rule 12 (corpo -> parar .)
+    MOVE_ROBO       reduce using rule 12 (corpo -> parar .)
+    LIGA_ROBO       reduce using rule 12 (corpo -> parar .)
+    BREAK           reduce using rule 12 (corpo -> parar .)
+    IF              reduce using rule 12 (corpo -> parar .)
+    PARAR           reduce using rule 12 (corpo -> parar .)
+    EXIBA           reduce using rule 12 (corpo -> parar .)
+    COMENTARIO      reduce using rule 12 (corpo -> parar .)
+    F_CHAVES        reduce using rule 12 (corpo -> parar .)
 
-    comparacao                     shift and go to state 38
 
 state 26
 
-    (1) programa -> INI_CODE A_CHAVES listacorpo F_CHAVES . FIM_CODE
+    (8) corpo -> movimenta .
 
-    FIM_CODE        shift and go to state 40
+    TIPO_VAR        reduce using rule 8 (corpo -> movimenta .)
+    VARIAVEL        reduce using rule 8 (corpo -> movimenta .)
+    WHILE           reduce using rule 8 (corpo -> movimenta .)
+    DIR_ROBO        reduce using rule 8 (corpo -> movimenta .)
+    MOVE_ROBO       reduce using rule 8 (corpo -> movimenta .)
+    LIGA_ROBO       reduce using rule 8 (corpo -> movimenta .)
+    BREAK           reduce using rule 8 (corpo -> movimenta .)
+    IF              reduce using rule 8 (corpo -> movimenta .)
+    PARAR           reduce using rule 8 (corpo -> movimenta .)
+    EXIBA           reduce using rule 8 (corpo -> movimenta .)
+    COMENTARIO      reduce using rule 8 (corpo -> movimenta .)
+    F_CHAVES        reduce using rule 8 (corpo -> movimenta .)
 
 
 state 27
 
-    (37) break -> BREAK QUEBRA_LINHA .
+    (13) corpo -> mostrar .
 
-    TIPO_VAR        reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    WHILE           reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    BREAK           reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    IF              reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    PARAR           reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
-    DESLIGA_ROBO    reduce using rule 37 (break -> BREAK QUEBRA_LINHA .)
+    TIPO_VAR        reduce using rule 13 (corpo -> mostrar .)
+    VARIAVEL        reduce using rule 13 (corpo -> mostrar .)
+    WHILE           reduce using rule 13 (corpo -> mostrar .)
+    DIR_ROBO        reduce using rule 13 (corpo -> mostrar .)
+    MOVE_ROBO       reduce using rule 13 (corpo -> mostrar .)
+    LIGA_ROBO       reduce using rule 13 (corpo -> mostrar .)
+    BREAK           reduce using rule 13 (corpo -> mostrar .)
+    IF              reduce using rule 13 (corpo -> mostrar .)
+    PARAR           reduce using rule 13 (corpo -> mostrar .)
+    EXIBA           reduce using rule 13 (corpo -> mostrar .)
+    COMENTARIO      reduce using rule 13 (corpo -> mostrar .)
+    F_CHAVES        reduce using rule 13 (corpo -> mostrar .)
 
 
 state 28
 
-    (26) atribuicao -> VARIAVEL ATRIBUIR . expressao QUEBRA_LINHA
-    (27) expressao -> . expressao OP_ARITMETICO expressao
-    (28) expressao -> . NUMERO
-    (29) expressao -> . VARIAVEL
+    (6) corpo -> loop .
 
-    NUMERO          shift and go to state 43
-    VARIAVEL        shift and go to state 41
+    TIPO_VAR        reduce using rule 6 (corpo -> loop .)
+    VARIAVEL        reduce using rule 6 (corpo -> loop .)
+    WHILE           reduce using rule 6 (corpo -> loop .)
+    DIR_ROBO        reduce using rule 6 (corpo -> loop .)
+    MOVE_ROBO       reduce using rule 6 (corpo -> loop .)
+    LIGA_ROBO       reduce using rule 6 (corpo -> loop .)
+    BREAK           reduce using rule 6 (corpo -> loop .)
+    IF              reduce using rule 6 (corpo -> loop .)
+    PARAR           reduce using rule 6 (corpo -> loop .)
+    EXIBA           reduce using rule 6 (corpo -> loop .)
+    COMENTARIO      reduce using rule 6 (corpo -> loop .)
+    F_CHAVES        reduce using rule 6 (corpo -> loop .)
 
-    expressao                      shift and go to state 42
 
 state 29
 
-    (2) programa -> INI_CODE A_CHAVES empty F_CHAVES . FIM_CODE
+    (5) corpo -> atribuicao .
 
-    FIM_CODE        shift and go to state 44
+    TIPO_VAR        reduce using rule 5 (corpo -> atribuicao .)
+    VARIAVEL        reduce using rule 5 (corpo -> atribuicao .)
+    WHILE           reduce using rule 5 (corpo -> atribuicao .)
+    DIR_ROBO        reduce using rule 5 (corpo -> atribuicao .)
+    MOVE_ROBO       reduce using rule 5 (corpo -> atribuicao .)
+    LIGA_ROBO       reduce using rule 5 (corpo -> atribuicao .)
+    BREAK           reduce using rule 5 (corpo -> atribuicao .)
+    IF              reduce using rule 5 (corpo -> atribuicao .)
+    PARAR           reduce using rule 5 (corpo -> atribuicao .)
+    EXIBA           reduce using rule 5 (corpo -> atribuicao .)
+    COMENTARIO      reduce using rule 5 (corpo -> atribuicao .)
+    F_CHAVES        reduce using rule 5 (corpo -> atribuicao .)
 
 
 state 30
 
-    (40) movimenta -> MOVE_ROBO QUEBRA_LINHA .
+    (62) iniciarobo -> LIGA_ROBO QUEBRA_LINHA . listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> LIGA_ROBO QUEBRA_LINHA . empty DESLIGA_ROBO QUEBRA_LINHA
+    (28) listacorpo_robo_on -> . corpo_robo_on
+    (29) listacorpo_robo_on -> . corpo_robo_on listacorpo_robo_on
+    (25) empty -> .
+    (15) corpo_robo_on -> . declaracao
+    (16) corpo_robo_on -> . atribuicao
+    (17) corpo_robo_on -> . loop_robo_on
+    (18) corpo_robo_on -> . direcao
+    (19) corpo_robo_on -> . movimenta
+    (20) corpo_robo_on -> . break
+    (21) corpo_robo_on -> . condicional_robo_on
+    (22) corpo_robo_on -> . parar
+    (23) corpo_robo_on -> . mostrar
+    (24) corpo_robo_on -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (46) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (58) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
 
-    TIPO_VAR        reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    WHILE           reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    BREAK           reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    IF              reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    PARAR           reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
-    DESLIGA_ROBO    reduce using rule 40 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 53
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    BREAK           shift and go to state 12
+    IF              shift and go to state 47
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
 
+    condicional_robo_on            shift and go to state 45
+    listacorpo_robo_on             shift and go to state 46
+    direcao                        shift and go to state 52
+    declaracao                     shift and go to state 54
+    mostrar                        shift and go to state 57
+    parar                          shift and go to state 55
+    movimenta                      shift and go to state 56
+    break                          shift and go to state 59
+    loop_robo_on                   shift and go to state 58
+    atribuicao                     shift and go to state 48
+    empty                          shift and go to state 49
+    corpo_robo_on                  shift and go to state 50
+    comentario                     shift and go to state 51
 
 state 31
 
-    (34) condicional -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (32) comparacao -> . VARIAVEL OP_RELACIONAL NUMERO
-    (33) comparacao -> . VARIAVEL OP_RELACIONAL VARIAVEL
+    (54) condicional -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (50) comparacao -> . VARIAVEL OP_RELACIONAL NUMERO
+    (51) comparacao -> . VARIAVEL OP_RELACIONAL VARIAVEL
+    (52) comparacao -> . VARIAVEL OP_RELACIONAL NUM_FLOAT
+    (53) comparacao -> . VARIAVEL OP_RELACIONAL TIPO_BOOL
 
-    VARIAVEL        shift and go to state 37
+    VARIAVEL        shift and go to state 60
 
-    comparacao                     shift and go to state 45
+    comparacao                     shift and go to state 61
 
 state 32
 
-    (39) parar -> PARAR QUEBRA_LINHA .
+    (2) programa -> INI_CODE A_CHAVES empty F_CHAVES . FIM_CODE
 
-    TIPO_VAR        reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    WHILE           reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    BREAK           reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    IF              reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    PARAR           reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    DESLIGA_ROBO    reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 39 (parar -> PARAR QUEBRA_LINHA .)
+    FIM_CODE        shift and go to state 62
 
 
 state 33
 
-    (36) iniciarobo -> LIGA_ROBO QUEBRA_LINHA . listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (23) listacorpo1 -> . corpo1
-    (24) listacorpo1 -> . corpo1 listacorpo1
-    (12) corpo1 -> . declaracao
-    (13) corpo1 -> . atribuicao
-    (14) corpo1 -> . loop
-    (15) corpo1 -> . direcao
-    (16) corpo1 -> . movimenta
-    (17) corpo1 -> . break
-    (18) corpo1 -> . condicional
-    (19) corpo1 -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (27) listacorpo -> corpo listacorpo .
 
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    F_CHAVES        reduce using rule 27 (listacorpo -> corpo listacorpo .)
 
-    loop                           shift and go to state 46
-    movimenta                      shift and go to state 47
-    atribuicao                     shift and go to state 48
-    listacorpo1                    shift and go to state 49
-    condicional                    shift and go to state 51
-    corpo1                         shift and go to state 50
-    break                          shift and go to state 53
-    direcao                        shift and go to state 54
-    declaracao                     shift and go to state 52
-    parar                          shift and go to state 55
 
 state 34
 
-    (25) declaracao -> TIPO_VAR VARIAVEL . QUEBRA_LINHA
+    (64) break -> BREAK QUEBRA_LINHA .
 
-    QUEBRA_LINHA    shift and go to state 56
+    TIPO_VAR        reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    WHILE           reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    BREAK           reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    IF              reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    PARAR           reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    EXIBA           reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 64 (break -> BREAK QUEBRA_LINHA .)
 
 
 state 35
 
-    (22) listacorpo -> corpo listacorpo .
+    (65) direcao -> DIR_ROBO QUEBRA_LINHA .
 
-    F_CHAVES        reduce using rule 22 (listacorpo -> corpo listacorpo .)
+    TIPO_VAR        reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    WHILE           reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    BREAK           reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    IF              reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    PARAR           reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    EXIBA           reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 65 (direcao -> DIR_ROBO QUEBRA_LINHA .)
 
 
 state 36
 
-    (38) direcao -> DIR_ROBO QUEBRA_LINHA .
+    (1) programa -> INI_CODE A_CHAVES listacorpo F_CHAVES . FIM_CODE
 
-    TIPO_VAR        reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    WHILE           reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    BREAK           reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    IF              reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    PARAR           reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
-    DESLIGA_ROBO    reduce using rule 38 (direcao -> DIR_ROBO QUEBRA_LINHA .)
+    FIM_CODE        shift and go to state 63
 
 
 state 37
 
-    (32) comparacao -> VARIAVEL . OP_RELACIONAL NUMERO
-    (33) comparacao -> VARIAVEL . OP_RELACIONAL VARIAVEL
+    (30) declaracao -> TIPO_VAR VARIAVEL . QUEBRA_LINHA
 
-    OP_RELACIONAL   shift and go to state 57
+    QUEBRA_LINHA    shift and go to state 64
 
 
 state 38
 
-    (30) loop -> WHILE A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (66) parar -> PARAR QUEBRA_LINHA .
 
-    F_PARENTE       shift and go to state 58
+    TIPO_VAR        reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    WHILE           reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    BREAK           reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    IF              reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    PARAR           reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    EXIBA           reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 66 (parar -> PARAR QUEBRA_LINHA .)
 
 
 state 39
 
-    (31) loop -> WHILE A_PARENTE TIPO_BOOL . F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (67) movimenta -> MOVE_ROBO QUEBRA_LINHA .
 
-    F_PARENTE       shift and go to state 59
+    TIPO_VAR        reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    WHILE           reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    BREAK           reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    IF              reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    PARAR           reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    EXIBA           reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 67 (movimenta -> MOVE_ROBO QUEBRA_LINHA .)
 
 
 state 40
 
-    (1) programa -> INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE .
+    (31) atribuicao -> VARIAVEL ATRIBUIR . operacao QUEBRA_LINHA
+    (32) atribuicao -> VARIAVEL ATRIBUIR . expressao_str QUEBRA_LINHA
+    (33) atribuicao -> VARIAVEL ATRIBUIR . expressao QUEBRA_LINHA
+    (34) atribuicao -> VARIAVEL ATRIBUIR . booleano QUEBRA_LINHA
+    (35) operacao -> . expressao OP_ARITMETICO expressao
+    (36) operacao -> . expressao OP_ARITMETICO operacao
+    (40) expressao_str -> . STRING
+    (37) expressao -> . NUMERO
+    (38) expressao -> . NUM_FLOAT
+    (39) expressao -> . VARIAVEL
+    (41) booleano -> . TIPO_BOOL
 
-    $end            reduce using rule 1 (programa -> INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE .)
+    STRING          shift and go to state 65
+    NUMERO          shift and go to state 68
+    NUM_FLOAT       shift and go to state 70
+    VARIAVEL        shift and go to state 67
+    TIPO_BOOL       shift and go to state 69
 
+    operacao                       shift and go to state 71
+    expressao                      shift and go to state 66
+    expressao_str                  shift and go to state 72
+    booleano                       shift and go to state 73
 
 state 41
 
-    (29) expressao -> VARIAVEL .
+    (42) loop -> WHILE A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> WHILE A_PARENTE . TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> WHILE A_PARENTE . comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> WHILE A_PARENTE . TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (50) comparacao -> . VARIAVEL OP_RELACIONAL NUMERO
+    (51) comparacao -> . VARIAVEL OP_RELACIONAL VARIAVEL
+    (52) comparacao -> . VARIAVEL OP_RELACIONAL NUM_FLOAT
+    (53) comparacao -> . VARIAVEL OP_RELACIONAL TIPO_BOOL
 
-    OP_ARITMETICO   reduce using rule 29 (expressao -> VARIAVEL .)
-    QUEBRA_LINHA    reduce using rule 29 (expressao -> VARIAVEL .)
+    TIPO_BOOL       shift and go to state 74
+    VARIAVEL        shift and go to state 60
 
+    comparacao                     shift and go to state 75
 
 state 42
 
-    (26) atribuicao -> VARIAVEL ATRIBUIR expressao . QUEBRA_LINHA
-    (27) expressao -> expressao . OP_ARITMETICO expressao
+    (69) mostrar -> EXIBA VARIAVEL . QUEBRA_LINHA
 
-    QUEBRA_LINHA    shift and go to state 61
-    OP_ARITMETICO   shift and go to state 60
+    QUEBRA_LINHA    shift and go to state 76
 
 
 state 43
 
-    (28) expressao -> NUMERO .
+    (68) mostrar -> EXIBA STRING . QUEBRA_LINHA
 
-    OP_ARITMETICO   reduce using rule 28 (expressao -> NUMERO .)
-    QUEBRA_LINHA    reduce using rule 28 (expressao -> NUMERO .)
+    QUEBRA_LINHA    shift and go to state 77
 
 
 state 44
+
+    (70) mostrar -> EXIBA NUMERO . QUEBRA_LINHA
+
+    QUEBRA_LINHA    shift and go to state 78
+
+
+state 45
+
+    (21) corpo_robo_on -> condicional_robo_on .
+
+    TIPO_VAR        reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    VARIAVEL        reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    WHILE           reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    DIR_ROBO        reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    MOVE_ROBO       reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    BREAK           reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    IF              reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    PARAR           reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    EXIBA           reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    COMENTARIO      reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    F_CHAVES        reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+    DESLIGA_ROBO    reduce using rule 21 (corpo_robo_on -> condicional_robo_on .)
+
+
+state 46
+
+    (62) iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on . DESLIGA_ROBO QUEBRA_LINHA
+
+    DESLIGA_ROBO    shift and go to state 79
+
+
+state 47
+
+    (58) condicional_robo_on -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> IF . A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    A_PARENTE       shift and go to state 80
+
+
+state 48
+
+    (16) corpo_robo_on -> atribuicao .
+
+    TIPO_VAR        reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    VARIAVEL        reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    WHILE           reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    DIR_ROBO        reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    MOVE_ROBO       reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    BREAK           reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    IF              reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    PARAR           reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    EXIBA           reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    COMENTARIO      reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    F_CHAVES        reduce using rule 16 (corpo_robo_on -> atribuicao .)
+    DESLIGA_ROBO    reduce using rule 16 (corpo_robo_on -> atribuicao .)
+
+
+state 49
+
+    (63) iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty . DESLIGA_ROBO QUEBRA_LINHA
+
+    DESLIGA_ROBO    shift and go to state 81
+
+
+state 50
+
+    (28) listacorpo_robo_on -> corpo_robo_on .
+    (29) listacorpo_robo_on -> corpo_robo_on . listacorpo_robo_on
+    (28) listacorpo_robo_on -> . corpo_robo_on
+    (29) listacorpo_robo_on -> . corpo_robo_on listacorpo_robo_on
+    (15) corpo_robo_on -> . declaracao
+    (16) corpo_robo_on -> . atribuicao
+    (17) corpo_robo_on -> . loop_robo_on
+    (18) corpo_robo_on -> . direcao
+    (19) corpo_robo_on -> . movimenta
+    (20) corpo_robo_on -> . break
+    (21) corpo_robo_on -> . condicional_robo_on
+    (22) corpo_robo_on -> . parar
+    (23) corpo_robo_on -> . mostrar
+    (24) corpo_robo_on -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (46) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (58) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 28 (listacorpo_robo_on -> corpo_robo_on .)
+    DESLIGA_ROBO    reduce using rule 28 (listacorpo_robo_on -> corpo_robo_on .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 53
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    BREAK           shift and go to state 12
+    IF              shift and go to state 47
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    condicional_robo_on            shift and go to state 45
+    listacorpo_robo_on             shift and go to state 82
+    direcao                        shift and go to state 52
+    declaracao                     shift and go to state 54
+    mostrar                        shift and go to state 57
+    parar                          shift and go to state 55
+    movimenta                      shift and go to state 56
+    break                          shift and go to state 59
+    loop_robo_on                   shift and go to state 58
+    atribuicao                     shift and go to state 48
+    comentario                     shift and go to state 51
+    corpo_robo_on                  shift and go to state 50
+
+state 51
+
+    (24) corpo_robo_on -> comentario .
+
+    TIPO_VAR        reduce using rule 24 (corpo_robo_on -> comentario .)
+    VARIAVEL        reduce using rule 24 (corpo_robo_on -> comentario .)
+    WHILE           reduce using rule 24 (corpo_robo_on -> comentario .)
+    DIR_ROBO        reduce using rule 24 (corpo_robo_on -> comentario .)
+    MOVE_ROBO       reduce using rule 24 (corpo_robo_on -> comentario .)
+    BREAK           reduce using rule 24 (corpo_robo_on -> comentario .)
+    IF              reduce using rule 24 (corpo_robo_on -> comentario .)
+    PARAR           reduce using rule 24 (corpo_robo_on -> comentario .)
+    EXIBA           reduce using rule 24 (corpo_robo_on -> comentario .)
+    COMENTARIO      reduce using rule 24 (corpo_robo_on -> comentario .)
+    F_CHAVES        reduce using rule 24 (corpo_robo_on -> comentario .)
+    DESLIGA_ROBO    reduce using rule 24 (corpo_robo_on -> comentario .)
+
+
+state 52
+
+    (18) corpo_robo_on -> direcao .
+
+    TIPO_VAR        reduce using rule 18 (corpo_robo_on -> direcao .)
+    VARIAVEL        reduce using rule 18 (corpo_robo_on -> direcao .)
+    WHILE           reduce using rule 18 (corpo_robo_on -> direcao .)
+    DIR_ROBO        reduce using rule 18 (corpo_robo_on -> direcao .)
+    MOVE_ROBO       reduce using rule 18 (corpo_robo_on -> direcao .)
+    BREAK           reduce using rule 18 (corpo_robo_on -> direcao .)
+    IF              reduce using rule 18 (corpo_robo_on -> direcao .)
+    PARAR           reduce using rule 18 (corpo_robo_on -> direcao .)
+    EXIBA           reduce using rule 18 (corpo_robo_on -> direcao .)
+    COMENTARIO      reduce using rule 18 (corpo_robo_on -> direcao .)
+    F_CHAVES        reduce using rule 18 (corpo_robo_on -> direcao .)
+    DESLIGA_ROBO    reduce using rule 18 (corpo_robo_on -> direcao .)
+
+
+state 53
+
+    (46) loop_robo_on -> WHILE . A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> WHILE . A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> WHILE . A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> WHILE . A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+
+    A_PARENTE       shift and go to state 83
+
+
+state 54
+
+    (15) corpo_robo_on -> declaracao .
+
+    TIPO_VAR        reduce using rule 15 (corpo_robo_on -> declaracao .)
+    VARIAVEL        reduce using rule 15 (corpo_robo_on -> declaracao .)
+    WHILE           reduce using rule 15 (corpo_robo_on -> declaracao .)
+    DIR_ROBO        reduce using rule 15 (corpo_robo_on -> declaracao .)
+    MOVE_ROBO       reduce using rule 15 (corpo_robo_on -> declaracao .)
+    BREAK           reduce using rule 15 (corpo_robo_on -> declaracao .)
+    IF              reduce using rule 15 (corpo_robo_on -> declaracao .)
+    PARAR           reduce using rule 15 (corpo_robo_on -> declaracao .)
+    EXIBA           reduce using rule 15 (corpo_robo_on -> declaracao .)
+    COMENTARIO      reduce using rule 15 (corpo_robo_on -> declaracao .)
+    F_CHAVES        reduce using rule 15 (corpo_robo_on -> declaracao .)
+    DESLIGA_ROBO    reduce using rule 15 (corpo_robo_on -> declaracao .)
+
+
+state 55
+
+    (22) corpo_robo_on -> parar .
+
+    TIPO_VAR        reduce using rule 22 (corpo_robo_on -> parar .)
+    VARIAVEL        reduce using rule 22 (corpo_robo_on -> parar .)
+    WHILE           reduce using rule 22 (corpo_robo_on -> parar .)
+    DIR_ROBO        reduce using rule 22 (corpo_robo_on -> parar .)
+    MOVE_ROBO       reduce using rule 22 (corpo_robo_on -> parar .)
+    BREAK           reduce using rule 22 (corpo_robo_on -> parar .)
+    IF              reduce using rule 22 (corpo_robo_on -> parar .)
+    PARAR           reduce using rule 22 (corpo_robo_on -> parar .)
+    EXIBA           reduce using rule 22 (corpo_robo_on -> parar .)
+    COMENTARIO      reduce using rule 22 (corpo_robo_on -> parar .)
+    F_CHAVES        reduce using rule 22 (corpo_robo_on -> parar .)
+    DESLIGA_ROBO    reduce using rule 22 (corpo_robo_on -> parar .)
+
+
+state 56
+
+    (19) corpo_robo_on -> movimenta .
+
+    TIPO_VAR        reduce using rule 19 (corpo_robo_on -> movimenta .)
+    VARIAVEL        reduce using rule 19 (corpo_robo_on -> movimenta .)
+    WHILE           reduce using rule 19 (corpo_robo_on -> movimenta .)
+    DIR_ROBO        reduce using rule 19 (corpo_robo_on -> movimenta .)
+    MOVE_ROBO       reduce using rule 19 (corpo_robo_on -> movimenta .)
+    BREAK           reduce using rule 19 (corpo_robo_on -> movimenta .)
+    IF              reduce using rule 19 (corpo_robo_on -> movimenta .)
+    PARAR           reduce using rule 19 (corpo_robo_on -> movimenta .)
+    EXIBA           reduce using rule 19 (corpo_robo_on -> movimenta .)
+    COMENTARIO      reduce using rule 19 (corpo_robo_on -> movimenta .)
+    F_CHAVES        reduce using rule 19 (corpo_robo_on -> movimenta .)
+    DESLIGA_ROBO    reduce using rule 19 (corpo_robo_on -> movimenta .)
+
+
+state 57
+
+    (23) corpo_robo_on -> mostrar .
+
+    TIPO_VAR        reduce using rule 23 (corpo_robo_on -> mostrar .)
+    VARIAVEL        reduce using rule 23 (corpo_robo_on -> mostrar .)
+    WHILE           reduce using rule 23 (corpo_robo_on -> mostrar .)
+    DIR_ROBO        reduce using rule 23 (corpo_robo_on -> mostrar .)
+    MOVE_ROBO       reduce using rule 23 (corpo_robo_on -> mostrar .)
+    BREAK           reduce using rule 23 (corpo_robo_on -> mostrar .)
+    IF              reduce using rule 23 (corpo_robo_on -> mostrar .)
+    PARAR           reduce using rule 23 (corpo_robo_on -> mostrar .)
+    EXIBA           reduce using rule 23 (corpo_robo_on -> mostrar .)
+    COMENTARIO      reduce using rule 23 (corpo_robo_on -> mostrar .)
+    F_CHAVES        reduce using rule 23 (corpo_robo_on -> mostrar .)
+    DESLIGA_ROBO    reduce using rule 23 (corpo_robo_on -> mostrar .)
+
+
+state 58
+
+    (17) corpo_robo_on -> loop_robo_on .
+
+    TIPO_VAR        reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    VARIAVEL        reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    WHILE           reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    DIR_ROBO        reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    MOVE_ROBO       reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    BREAK           reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    IF              reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    PARAR           reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    EXIBA           reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    COMENTARIO      reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    F_CHAVES        reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+    DESLIGA_ROBO    reduce using rule 17 (corpo_robo_on -> loop_robo_on .)
+
+
+state 59
+
+    (20) corpo_robo_on -> break .
+
+    TIPO_VAR        reduce using rule 20 (corpo_robo_on -> break .)
+    VARIAVEL        reduce using rule 20 (corpo_robo_on -> break .)
+    WHILE           reduce using rule 20 (corpo_robo_on -> break .)
+    DIR_ROBO        reduce using rule 20 (corpo_robo_on -> break .)
+    MOVE_ROBO       reduce using rule 20 (corpo_robo_on -> break .)
+    BREAK           reduce using rule 20 (corpo_robo_on -> break .)
+    IF              reduce using rule 20 (corpo_robo_on -> break .)
+    PARAR           reduce using rule 20 (corpo_robo_on -> break .)
+    EXIBA           reduce using rule 20 (corpo_robo_on -> break .)
+    COMENTARIO      reduce using rule 20 (corpo_robo_on -> break .)
+    F_CHAVES        reduce using rule 20 (corpo_robo_on -> break .)
+    DESLIGA_ROBO    reduce using rule 20 (corpo_robo_on -> break .)
+
+
+state 60
+
+    (50) comparacao -> VARIAVEL . OP_RELACIONAL NUMERO
+    (51) comparacao -> VARIAVEL . OP_RELACIONAL VARIAVEL
+    (52) comparacao -> VARIAVEL . OP_RELACIONAL NUM_FLOAT
+    (53) comparacao -> VARIAVEL . OP_RELACIONAL TIPO_BOOL
+
+    OP_RELACIONAL   shift and go to state 84
+
+
+state 61
+
+    (54) condicional -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    F_PARENTE       shift and go to state 85
+
+
+state 62
 
     (2) programa -> INI_CODE A_CHAVES empty F_CHAVES FIM_CODE .
 
     $end            reduce using rule 2 (programa -> INI_CODE A_CHAVES empty F_CHAVES FIM_CODE .)
 
 
-state 45
-
-    (34) condicional -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-
-    F_PARENTE       shift and go to state 62
-
-
-state 46
-
-    (14) corpo1 -> loop .
-
-    TIPO_VAR        reduce using rule 14 (corpo1 -> loop .)
-    VARIAVEL        reduce using rule 14 (corpo1 -> loop .)
-    WHILE           reduce using rule 14 (corpo1 -> loop .)
-    DIR_ROBO        reduce using rule 14 (corpo1 -> loop .)
-    MOVE_ROBO       reduce using rule 14 (corpo1 -> loop .)
-    BREAK           reduce using rule 14 (corpo1 -> loop .)
-    IF              reduce using rule 14 (corpo1 -> loop .)
-    PARAR           reduce using rule 14 (corpo1 -> loop .)
-    DESLIGA_ROBO    reduce using rule 14 (corpo1 -> loop .)
-
-
-state 47
-
-    (16) corpo1 -> movimenta .
-
-    TIPO_VAR        reduce using rule 16 (corpo1 -> movimenta .)
-    VARIAVEL        reduce using rule 16 (corpo1 -> movimenta .)
-    WHILE           reduce using rule 16 (corpo1 -> movimenta .)
-    DIR_ROBO        reduce using rule 16 (corpo1 -> movimenta .)
-    MOVE_ROBO       reduce using rule 16 (corpo1 -> movimenta .)
-    BREAK           reduce using rule 16 (corpo1 -> movimenta .)
-    IF              reduce using rule 16 (corpo1 -> movimenta .)
-    PARAR           reduce using rule 16 (corpo1 -> movimenta .)
-    DESLIGA_ROBO    reduce using rule 16 (corpo1 -> movimenta .)
-
-
-state 48
-
-    (13) corpo1 -> atribuicao .
-
-    TIPO_VAR        reduce using rule 13 (corpo1 -> atribuicao .)
-    VARIAVEL        reduce using rule 13 (corpo1 -> atribuicao .)
-    WHILE           reduce using rule 13 (corpo1 -> atribuicao .)
-    DIR_ROBO        reduce using rule 13 (corpo1 -> atribuicao .)
-    MOVE_ROBO       reduce using rule 13 (corpo1 -> atribuicao .)
-    BREAK           reduce using rule 13 (corpo1 -> atribuicao .)
-    IF              reduce using rule 13 (corpo1 -> atribuicao .)
-    PARAR           reduce using rule 13 (corpo1 -> atribuicao .)
-    DESLIGA_ROBO    reduce using rule 13 (corpo1 -> atribuicao .)
-
-
-state 49
-
-    (36) iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 . DESLIGA_ROBO QUEBRA_LINHA
-
-    DESLIGA_ROBO    shift and go to state 63
-
-
-state 50
-
-    (23) listacorpo1 -> corpo1 .
-    (24) listacorpo1 -> corpo1 . listacorpo1
-    (23) listacorpo1 -> . corpo1
-    (24) listacorpo1 -> . corpo1 listacorpo1
-    (12) corpo1 -> . declaracao
-    (13) corpo1 -> . atribuicao
-    (14) corpo1 -> . loop
-    (15) corpo1 -> . direcao
-    (16) corpo1 -> . movimenta
-    (17) corpo1 -> . break
-    (18) corpo1 -> . condicional
-    (19) corpo1 -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
-
-    DESLIGA_ROBO    reduce using rule 23 (listacorpo1 -> corpo1 .)
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
-
-    loop                           shift and go to state 46
-    movimenta                      shift and go to state 47
-    atribuicao                     shift and go to state 48
-    listacorpo1                    shift and go to state 64
-    condicional                    shift and go to state 51
-    corpo1                         shift and go to state 50
-    break                          shift and go to state 53
-    direcao                        shift and go to state 54
-    declaracao                     shift and go to state 52
-    parar                          shift and go to state 55
-
-state 51
-
-    (18) corpo1 -> condicional .
-
-    TIPO_VAR        reduce using rule 18 (corpo1 -> condicional .)
-    VARIAVEL        reduce using rule 18 (corpo1 -> condicional .)
-    WHILE           reduce using rule 18 (corpo1 -> condicional .)
-    DIR_ROBO        reduce using rule 18 (corpo1 -> condicional .)
-    MOVE_ROBO       reduce using rule 18 (corpo1 -> condicional .)
-    BREAK           reduce using rule 18 (corpo1 -> condicional .)
-    IF              reduce using rule 18 (corpo1 -> condicional .)
-    PARAR           reduce using rule 18 (corpo1 -> condicional .)
-    DESLIGA_ROBO    reduce using rule 18 (corpo1 -> condicional .)
-
-
-state 52
-
-    (12) corpo1 -> declaracao .
-
-    TIPO_VAR        reduce using rule 12 (corpo1 -> declaracao .)
-    VARIAVEL        reduce using rule 12 (corpo1 -> declaracao .)
-    WHILE           reduce using rule 12 (corpo1 -> declaracao .)
-    DIR_ROBO        reduce using rule 12 (corpo1 -> declaracao .)
-    MOVE_ROBO       reduce using rule 12 (corpo1 -> declaracao .)
-    BREAK           reduce using rule 12 (corpo1 -> declaracao .)
-    IF              reduce using rule 12 (corpo1 -> declaracao .)
-    PARAR           reduce using rule 12 (corpo1 -> declaracao .)
-    DESLIGA_ROBO    reduce using rule 12 (corpo1 -> declaracao .)
-
-
-state 53
-
-    (17) corpo1 -> break .
-
-    TIPO_VAR        reduce using rule 17 (corpo1 -> break .)
-    VARIAVEL        reduce using rule 17 (corpo1 -> break .)
-    WHILE           reduce using rule 17 (corpo1 -> break .)
-    DIR_ROBO        reduce using rule 17 (corpo1 -> break .)
-    MOVE_ROBO       reduce using rule 17 (corpo1 -> break .)
-    BREAK           reduce using rule 17 (corpo1 -> break .)
-    IF              reduce using rule 17 (corpo1 -> break .)
-    PARAR           reduce using rule 17 (corpo1 -> break .)
-    DESLIGA_ROBO    reduce using rule 17 (corpo1 -> break .)
-
-
-state 54
-
-    (15) corpo1 -> direcao .
-
-    TIPO_VAR        reduce using rule 15 (corpo1 -> direcao .)
-    VARIAVEL        reduce using rule 15 (corpo1 -> direcao .)
-    WHILE           reduce using rule 15 (corpo1 -> direcao .)
-    DIR_ROBO        reduce using rule 15 (corpo1 -> direcao .)
-    MOVE_ROBO       reduce using rule 15 (corpo1 -> direcao .)
-    BREAK           reduce using rule 15 (corpo1 -> direcao .)
-    IF              reduce using rule 15 (corpo1 -> direcao .)
-    PARAR           reduce using rule 15 (corpo1 -> direcao .)
-    DESLIGA_ROBO    reduce using rule 15 (corpo1 -> direcao .)
-
-
-state 55
-
-    (19) corpo1 -> parar .
-
-    TIPO_VAR        reduce using rule 19 (corpo1 -> parar .)
-    VARIAVEL        reduce using rule 19 (corpo1 -> parar .)
-    WHILE           reduce using rule 19 (corpo1 -> parar .)
-    DIR_ROBO        reduce using rule 19 (corpo1 -> parar .)
-    MOVE_ROBO       reduce using rule 19 (corpo1 -> parar .)
-    BREAK           reduce using rule 19 (corpo1 -> parar .)
-    IF              reduce using rule 19 (corpo1 -> parar .)
-    PARAR           reduce using rule 19 (corpo1 -> parar .)
-    DESLIGA_ROBO    reduce using rule 19 (corpo1 -> parar .)
-
-
-state 56
-
-    (25) declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .
-
-    TIPO_VAR        reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    WHILE           reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    BREAK           reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    IF              reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    PARAR           reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-    DESLIGA_ROBO    reduce using rule 25 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
-
-
-state 57
-
-    (32) comparacao -> VARIAVEL OP_RELACIONAL . NUMERO
-    (33) comparacao -> VARIAVEL OP_RELACIONAL . VARIAVEL
-
-    NUMERO          shift and go to state 66
-    VARIAVEL        shift and go to state 65
-
-
-state 58
-
-    (30) loop -> WHILE A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo F_CHAVES
-
-    A_CHAVES        shift and go to state 67
-
-
-state 59
-
-    (31) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE . A_CHAVES listacorpo F_CHAVES
-
-    A_CHAVES        shift and go to state 68
-
-
-state 60
-
-    (27) expressao -> expressao OP_ARITMETICO . expressao
-    (27) expressao -> . expressao OP_ARITMETICO expressao
-    (28) expressao -> . NUMERO
-    (29) expressao -> . VARIAVEL
-
-    NUMERO          shift and go to state 43
-    VARIAVEL        shift and go to state 41
-
-    expressao                      shift and go to state 69
-
-state 61
-
-    (26) atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .
-
-    TIPO_VAR        reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    WHILE           reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    BREAK           reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    IF              reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    PARAR           reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-    DESLIGA_ROBO    reduce using rule 26 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
-
-
-state 62
-
-    (34) condicional -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-
-    A_CHAVES        shift and go to state 70
-
-
 state 63
 
-    (36) iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO . QUEBRA_LINHA
+    (1) programa -> INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE .
 
-    QUEBRA_LINHA    shift and go to state 71
+    $end            reduce using rule 1 (programa -> INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE .)
 
 
 state 64
 
-    (24) listacorpo1 -> corpo1 listacorpo1 .
+    (30) declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .
 
-    DESLIGA_ROBO    reduce using rule 24 (listacorpo1 -> corpo1 listacorpo1 .)
+    TIPO_VAR        reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    WHILE           reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    BREAK           reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    IF              reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    PARAR           reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    EXIBA           reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 30 (declaracao -> TIPO_VAR VARIAVEL QUEBRA_LINHA .)
 
 
 state 65
 
-    (33) comparacao -> VARIAVEL OP_RELACIONAL VARIAVEL .
+    (40) expressao_str -> STRING .
 
-    F_PARENTE       reduce using rule 33 (comparacao -> VARIAVEL OP_RELACIONAL VARIAVEL .)
+    QUEBRA_LINHA    reduce using rule 40 (expressao_str -> STRING .)
 
 
 state 66
 
-    (32) comparacao -> VARIAVEL OP_RELACIONAL NUMERO .
+    (33) atribuicao -> VARIAVEL ATRIBUIR expressao . QUEBRA_LINHA
+    (35) operacao -> expressao . OP_ARITMETICO expressao
+    (36) operacao -> expressao . OP_ARITMETICO operacao
 
-    F_PARENTE       reduce using rule 32 (comparacao -> VARIAVEL OP_RELACIONAL NUMERO .)
+    QUEBRA_LINHA    shift and go to state 87
+    OP_ARITMETICO   shift and go to state 86
 
 
 state 67
 
-    (30) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo F_CHAVES
-    (21) listacorpo -> . corpo
-    (22) listacorpo -> . corpo listacorpo
-    (3) corpo -> . declaracao
-    (4) corpo -> . atribuicao
-    (5) corpo -> . loop
-    (6) corpo -> . direcao
-    (7) corpo -> . movimenta
-    (8) corpo -> . iniciarobo
-    (9) corpo -> . break
-    (10) corpo -> . condicional
-    (11) corpo -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (36) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (39) expressao -> VARIAVEL .
 
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    LIGA_ROBO       shift and go to state 16
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    OP_ARITMETICO   reduce using rule 39 (expressao -> VARIAVEL .)
+    QUEBRA_LINHA    reduce using rule 39 (expressao -> VARIAVEL .)
 
-    listacorpo                     shift and go to state 72
-    loop                           shift and go to state 6
-    movimenta                      shift and go to state 7
-    atribuicao                     shift and go to state 8
-    iniciarobo                     shift and go to state 19
-    condicional                    shift and go to state 10
-    break                          shift and go to state 20
-    direcao                        shift and go to state 21
-    corpo                          shift and go to state 22
-    parar                          shift and go to state 24
-    declaracao                     shift and go to state 17
 
 state 68
 
-    (31) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES . listacorpo F_CHAVES
-    (21) listacorpo -> . corpo
-    (22) listacorpo -> . corpo listacorpo
-    (3) corpo -> . declaracao
-    (4) corpo -> . atribuicao
-    (5) corpo -> . loop
-    (6) corpo -> . direcao
-    (7) corpo -> . movimenta
-    (8) corpo -> . iniciarobo
-    (9) corpo -> . break
-    (10) corpo -> . condicional
-    (11) corpo -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (36) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (37) expressao -> NUMERO .
 
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    LIGA_ROBO       shift and go to state 16
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    OP_ARITMETICO   reduce using rule 37 (expressao -> NUMERO .)
+    QUEBRA_LINHA    reduce using rule 37 (expressao -> NUMERO .)
 
-    listacorpo                     shift and go to state 73
-    loop                           shift and go to state 6
-    movimenta                      shift and go to state 7
-    atribuicao                     shift and go to state 8
-    iniciarobo                     shift and go to state 19
-    condicional                    shift and go to state 10
-    break                          shift and go to state 20
-    direcao                        shift and go to state 21
-    corpo                          shift and go to state 22
-    declaracao                     shift and go to state 17
-    parar                          shift and go to state 24
 
 state 69
 
-    (27) expressao -> expressao OP_ARITMETICO expressao .
-    (27) expressao -> expressao . OP_ARITMETICO expressao
+    (41) booleano -> TIPO_BOOL .
 
-  ! shift/reduce conflict for OP_ARITMETICO resolved as shift
-    QUEBRA_LINHA    reduce using rule 27 (expressao -> expressao OP_ARITMETICO expressao .)
-    OP_ARITMETICO   shift and go to state 60
-
-  ! OP_ARITMETICO   [ reduce using rule 27 (expressao -> expressao OP_ARITMETICO expressao .) ]
+    QUEBRA_LINHA    reduce using rule 41 (booleano -> TIPO_BOOL .)
 
 
 state 70
 
-    (34) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo F_CHAVES
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (21) listacorpo -> . corpo
-    (22) listacorpo -> . corpo listacorpo
-    (3) corpo -> . declaracao
-    (4) corpo -> . atribuicao
-    (5) corpo -> . loop
-    (6) corpo -> . direcao
-    (7) corpo -> . movimenta
-    (8) corpo -> . iniciarobo
-    (9) corpo -> . break
-    (10) corpo -> . condicional
-    (11) corpo -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (36) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (38) expressao -> NUM_FLOAT .
 
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    LIGA_ROBO       shift and go to state 16
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    OP_ARITMETICO   reduce using rule 38 (expressao -> NUM_FLOAT .)
+    QUEBRA_LINHA    reduce using rule 38 (expressao -> NUM_FLOAT .)
 
-    listacorpo                     shift and go to state 74
-    loop                           shift and go to state 6
-    movimenta                      shift and go to state 7
-    atribuicao                     shift and go to state 8
-    iniciarobo                     shift and go to state 19
-    condicional                    shift and go to state 10
-    break                          shift and go to state 20
-    direcao                        shift and go to state 21
-    corpo                          shift and go to state 22
-    parar                          shift and go to state 24
-    declaracao                     shift and go to state 17
 
 state 71
 
-    (36) iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .
+    (31) atribuicao -> VARIAVEL ATRIBUIR operacao . QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    VARIAVEL        reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    WHILE           reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    DIR_ROBO        reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    MOVE_ROBO       reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    LIGA_ROBO       reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    BREAK           reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    IF              reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    PARAR           reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
-    F_CHAVES        reduce using rule 36 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA .)
+    QUEBRA_LINHA    shift and go to state 88
 
 
 state 72
 
-    (30) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo . F_CHAVES
+    (32) atribuicao -> VARIAVEL ATRIBUIR expressao_str . QUEBRA_LINHA
 
-    F_CHAVES        shift and go to state 75
+    QUEBRA_LINHA    shift and go to state 89
 
 
 state 73
 
-    (31) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo . F_CHAVES
+    (34) atribuicao -> VARIAVEL ATRIBUIR booleano . QUEBRA_LINHA
 
-    F_CHAVES        shift and go to state 76
+    QUEBRA_LINHA    shift and go to state 90
 
 
 state 74
 
-    (34) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo . F_CHAVES
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo . F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> WHILE A_PARENTE TIPO_BOOL . F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (45) loop -> WHILE A_PARENTE TIPO_BOOL . F_PARENTE A_CHAVES empty F_CHAVES
 
-    F_CHAVES        shift and go to state 77
+    F_PARENTE       shift and go to state 91
 
 
 state 75
 
-    (30) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .
+    (42) loop -> WHILE A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> WHILE A_PARENTE comparacao . F_PARENTE A_CHAVES empty F_CHAVES
 
-    TIPO_VAR        reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    VARIAVEL        reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    WHILE           reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    DIR_ROBO        reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    MOVE_ROBO       reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    LIGA_ROBO       reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    BREAK           reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    IF              reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    PARAR           reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    F_CHAVES        reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    DESLIGA_ROBO    reduce using rule 30 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    F_PARENTE       shift and go to state 92
 
 
 state 76
 
-    (31) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .
+    (69) mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .
 
-    TIPO_VAR        reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    VARIAVEL        reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    WHILE           reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    DIR_ROBO        reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    MOVE_ROBO       reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    LIGA_ROBO       reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    BREAK           reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    IF              reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    PARAR           reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    F_CHAVES        reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    DESLIGA_ROBO    reduce using rule 31 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    TIPO_VAR        reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    WHILE           reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    BREAK           reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    IF              reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    PARAR           reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    EXIBA           reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 69 (mostrar -> EXIBA VARIAVEL QUEBRA_LINHA .)
 
 
 state 77
 
-    (34) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES . ELSE A_CHAVES listacorpo F_CHAVES
+    (68) mostrar -> EXIBA STRING QUEBRA_LINHA .
 
-    TIPO_VAR        reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    VARIAVEL        reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    WHILE           reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    DIR_ROBO        reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    MOVE_ROBO       reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    LIGA_ROBO       reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    BREAK           reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    IF              reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    PARAR           reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    F_CHAVES        reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    DESLIGA_ROBO    reduce using rule 34 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
-    ELSE            shift and go to state 78
+    TIPO_VAR        reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    WHILE           reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    BREAK           reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    IF              reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    PARAR           reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    EXIBA           reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 68 (mostrar -> EXIBA STRING QUEBRA_LINHA .)
 
 
 state 78
 
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE . A_CHAVES listacorpo F_CHAVES
+    (70) mostrar -> EXIBA NUMERO QUEBRA_LINHA .
 
-    A_CHAVES        shift and go to state 79
+    TIPO_VAR        reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    WHILE           reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    BREAK           reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    IF              reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    PARAR           reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    EXIBA           reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 70 (mostrar -> EXIBA NUMERO QUEBRA_LINHA .)
 
 
 state 79
 
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES . listacorpo F_CHAVES
-    (21) listacorpo -> . corpo
-    (22) listacorpo -> . corpo listacorpo
-    (3) corpo -> . declaracao
-    (4) corpo -> . atribuicao
-    (5) corpo -> . loop
-    (6) corpo -> . direcao
-    (7) corpo -> . movimenta
-    (8) corpo -> . iniciarobo
-    (9) corpo -> . break
-    (10) corpo -> . condicional
-    (11) corpo -> . parar
-    (25) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
-    (26) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
-    (30) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (31) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (38) direcao -> . DIR_ROBO QUEBRA_LINHA
-    (40) movimenta -> . MOVE_ROBO QUEBRA_LINHA
-    (36) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA
-    (37) break -> . BREAK QUEBRA_LINHA
-    (34) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
-    (35) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-    (39) parar -> . PARAR QUEBRA_LINHA
+    (62) iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO . QUEBRA_LINHA
 
-    TIPO_VAR        shift and go to state 18
-    VARIAVEL        shift and go to state 11
-    WHILE           shift and go to state 4
-    DIR_ROBO        shift and go to state 23
-    MOVE_ROBO       shift and go to state 13
-    LIGA_ROBO       shift and go to state 16
-    BREAK           shift and go to state 9
-    IF              shift and go to state 14
-    PARAR           shift and go to state 15
+    QUEBRA_LINHA    shift and go to state 93
 
-    listacorpo                     shift and go to state 80
-    loop                           shift and go to state 6
-    movimenta                      shift and go to state 7
-    atribuicao                     shift and go to state 8
-    iniciarobo                     shift and go to state 19
-    condicional                    shift and go to state 10
-    break                          shift and go to state 20
-    direcao                        shift and go to state 21
-    corpo                          shift and go to state 22
-    parar                          shift and go to state 24
-    declaracao                     shift and go to state 17
 
 state 80
 
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo . F_CHAVES
+    (58) condicional_robo_on -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> IF A_PARENTE . comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (50) comparacao -> . VARIAVEL OP_RELACIONAL NUMERO
+    (51) comparacao -> . VARIAVEL OP_RELACIONAL VARIAVEL
+    (52) comparacao -> . VARIAVEL OP_RELACIONAL NUM_FLOAT
+    (53) comparacao -> . VARIAVEL OP_RELACIONAL TIPO_BOOL
 
-    F_CHAVES        shift and go to state 81
+    VARIAVEL        shift and go to state 60
 
+    comparacao                     shift and go to state 94
 
 state 81
 
-    (35) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .
+    (63) iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO . QUEBRA_LINHA
 
-    TIPO_VAR        reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    VARIAVEL        reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    WHILE           reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    DIR_ROBO        reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    MOVE_ROBO       reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    LIGA_ROBO       reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    BREAK           reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    IF              reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    PARAR           reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    F_CHAVES        reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
-    DESLIGA_ROBO    reduce using rule 35 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    QUEBRA_LINHA    shift and go to state 95
 
-WARNING: 
-WARNING: Conflicts:
-WARNING: 
-WARNING: shift/reduce conflict for OP_ARITMETICO in state 69 resolved as shift
+
+state 82
+
+    (29) listacorpo_robo_on -> corpo_robo_on listacorpo_robo_on .
+
+    F_CHAVES        reduce using rule 29 (listacorpo_robo_on -> corpo_robo_on listacorpo_robo_on .)
+    DESLIGA_ROBO    reduce using rule 29 (listacorpo_robo_on -> corpo_robo_on listacorpo_robo_on .)
+
+
+state 83
+
+    (46) loop_robo_on -> WHILE A_PARENTE . comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> WHILE A_PARENTE . TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> WHILE A_PARENTE . comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> WHILE A_PARENTE . TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (50) comparacao -> . VARIAVEL OP_RELACIONAL NUMERO
+    (51) comparacao -> . VARIAVEL OP_RELACIONAL VARIAVEL
+    (52) comparacao -> . VARIAVEL OP_RELACIONAL NUM_FLOAT
+    (53) comparacao -> . VARIAVEL OP_RELACIONAL TIPO_BOOL
+
+    TIPO_BOOL       shift and go to state 96
+    VARIAVEL        shift and go to state 60
+
+    comparacao                     shift and go to state 97
+
+state 84
+
+    (50) comparacao -> VARIAVEL OP_RELACIONAL . NUMERO
+    (51) comparacao -> VARIAVEL OP_RELACIONAL . VARIAVEL
+    (52) comparacao -> VARIAVEL OP_RELACIONAL . NUM_FLOAT
+    (53) comparacao -> VARIAVEL OP_RELACIONAL . TIPO_BOOL
+
+    NUMERO          shift and go to state 100
+    VARIAVEL        shift and go to state 101
+    NUM_FLOAT       shift and go to state 99
+    TIPO_BOOL       shift and go to state 98
+
+
+state 85
+
+    (54) condicional -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES empty F_CHAVES
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 102
+
+
+state 86
+
+    (35) operacao -> expressao OP_ARITMETICO . expressao
+    (36) operacao -> expressao OP_ARITMETICO . operacao
+    (37) expressao -> . NUMERO
+    (38) expressao -> . NUM_FLOAT
+    (39) expressao -> . VARIAVEL
+    (35) operacao -> . expressao OP_ARITMETICO expressao
+    (36) operacao -> . expressao OP_ARITMETICO operacao
+
+    NUMERO          shift and go to state 68
+    NUM_FLOAT       shift and go to state 70
+    VARIAVEL        shift and go to state 67
+
+    operacao                       shift and go to state 104
+    expressao                      shift and go to state 103
+
+state 87
+
+    (33) atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .
+
+    TIPO_VAR        reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    WHILE           reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    BREAK           reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    IF              reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    PARAR           reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    EXIBA           reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 33 (atribuicao -> VARIAVEL ATRIBUIR expressao QUEBRA_LINHA .)
+
+
+state 88
+
+    (31) atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .
+
+    TIPO_VAR        reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    WHILE           reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    BREAK           reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    IF              reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    PARAR           reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    EXIBA           reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 31 (atribuicao -> VARIAVEL ATRIBUIR operacao QUEBRA_LINHA .)
+
+
+state 89
+
+    (32) atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .
+
+    TIPO_VAR        reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    WHILE           reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    BREAK           reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    IF              reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    PARAR           reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    EXIBA           reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 32 (atribuicao -> VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA .)
+
+
+state 90
+
+    (34) atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .
+
+    TIPO_VAR        reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    WHILE           reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    BREAK           reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    IF              reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    PARAR           reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    EXIBA           reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    DESLIGA_ROBO    reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 34 (atribuicao -> VARIAVEL ATRIBUIR booleano QUEBRA_LINHA .)
+
+
+state 91
+
+    (43) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE . A_CHAVES listacorpo F_CHAVES
+    (45) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE . A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 105
+
+
+state 92
+
+    (42) loop -> WHILE A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo F_CHAVES
+    (44) loop -> WHILE A_PARENTE comparacao F_PARENTE . A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 106
+
+
+state 93
+
+    (62) iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .
+
+    TIPO_VAR        reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    WHILE           reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    BREAK           reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    IF              reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    PARAR           reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    EXIBA           reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 62 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA .)
+
+
+state 94
+
+    (58) condicional_robo_on -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> IF A_PARENTE comparacao . F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    F_PARENTE       shift and go to state 107
+
+
+state 95
+
+    (63) iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .
+
+    TIPO_VAR        reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    VARIAVEL        reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    WHILE           reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    DIR_ROBO        reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    MOVE_ROBO       reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    LIGA_ROBO       reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    BREAK           reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    IF              reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    PARAR           reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    EXIBA           reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    COMENTARIO      reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+    F_CHAVES        reduce using rule 63 (iniciarobo -> LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA .)
+
+
+state 96
+
+    (47) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL . F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (49) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL . F_PARENTE A_CHAVES empty F_CHAVES
+
+    F_PARENTE       shift and go to state 108
+
+
+state 97
+
+    (46) loop_robo_on -> WHILE A_PARENTE comparacao . F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> WHILE A_PARENTE comparacao . F_PARENTE A_CHAVES empty F_CHAVES
+
+    F_PARENTE       shift and go to state 109
+
+
+state 98
+
+    (53) comparacao -> VARIAVEL OP_RELACIONAL TIPO_BOOL .
+
+    F_PARENTE       reduce using rule 53 (comparacao -> VARIAVEL OP_RELACIONAL TIPO_BOOL .)
+
+
+state 99
+
+    (52) comparacao -> VARIAVEL OP_RELACIONAL NUM_FLOAT .
+
+    F_PARENTE       reduce using rule 52 (comparacao -> VARIAVEL OP_RELACIONAL NUM_FLOAT .)
+
+
+state 100
+
+    (50) comparacao -> VARIAVEL OP_RELACIONAL NUMERO .
+
+    F_PARENTE       reduce using rule 50 (comparacao -> VARIAVEL OP_RELACIONAL NUMERO .)
+
+
+state 101
+
+    (51) comparacao -> VARIAVEL OP_RELACIONAL VARIAVEL .
+
+    F_PARENTE       reduce using rule 51 (comparacao -> VARIAVEL OP_RELACIONAL VARIAVEL .)
+
+
+state 102
+
+    (54) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo F_CHAVES
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . empty F_CHAVES
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (26) listacorpo -> . corpo
+    (27) listacorpo -> . corpo listacorpo
+    (25) empty -> .
+    (4) corpo -> . declaracao
+    (5) corpo -> . atribuicao
+    (6) corpo -> . loop
+    (7) corpo -> . direcao
+    (8) corpo -> . movimenta
+    (9) corpo -> . iniciarobo
+    (10) corpo -> . break
+    (11) corpo -> . condicional
+    (12) corpo -> . parar
+    (13) corpo -> . mostrar
+    (14) corpo -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (42) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (62) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (54) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 22
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    LIGA_ROBO       shift and go to state 6
+    BREAK           shift and go to state 12
+    IF              shift and go to state 9
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    iniciarobo                     shift and go to state 7
+    condicional                    shift and go to state 18
+    listacorpo                     shift and go to state 111
+    corpo                          shift and go to state 11
+    direcao                        shift and go to state 23
+    declaracao                     shift and go to state 15
+    mostrar                        shift and go to state 27
+    parar                          shift and go to state 25
+    movimenta                      shift and go to state 26
+    break                          shift and go to state 16
+    loop                           shift and go to state 28
+    atribuicao                     shift and go to state 29
+    empty                          shift and go to state 110
+    comentario                     shift and go to state 8
+
+state 103
+
+    (35) operacao -> expressao OP_ARITMETICO expressao .
+    (35) operacao -> expressao . OP_ARITMETICO expressao
+    (36) operacao -> expressao . OP_ARITMETICO operacao
+
+    QUEBRA_LINHA    reduce using rule 35 (operacao -> expressao OP_ARITMETICO expressao .)
+    OP_ARITMETICO   shift and go to state 86
+
+
+state 104
+
+    (36) operacao -> expressao OP_ARITMETICO operacao .
+
+    QUEBRA_LINHA    reduce using rule 36 (operacao -> expressao OP_ARITMETICO operacao .)
+
+
+state 105
+
+    (43) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES . listacorpo F_CHAVES
+    (45) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES . empty F_CHAVES
+    (26) listacorpo -> . corpo
+    (27) listacorpo -> . corpo listacorpo
+    (25) empty -> .
+    (4) corpo -> . declaracao
+    (5) corpo -> . atribuicao
+    (6) corpo -> . loop
+    (7) corpo -> . direcao
+    (8) corpo -> . movimenta
+    (9) corpo -> . iniciarobo
+    (10) corpo -> . break
+    (11) corpo -> . condicional
+    (12) corpo -> . parar
+    (13) corpo -> . mostrar
+    (14) corpo -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (42) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (62) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (54) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 22
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    LIGA_ROBO       shift and go to state 6
+    BREAK           shift and go to state 12
+    IF              shift and go to state 9
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    iniciarobo                     shift and go to state 7
+    condicional                    shift and go to state 18
+    listacorpo                     shift and go to state 113
+    direcao                        shift and go to state 23
+    declaracao                     shift and go to state 15
+    mostrar                        shift and go to state 27
+    parar                          shift and go to state 25
+    movimenta                      shift and go to state 26
+    break                          shift and go to state 16
+    loop                           shift and go to state 28
+    atribuicao                     shift and go to state 29
+    empty                          shift and go to state 112
+    corpo                          shift and go to state 11
+    comentario                     shift and go to state 8
+
+state 106
+
+    (42) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo F_CHAVES
+    (44) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES . empty F_CHAVES
+    (26) listacorpo -> . corpo
+    (27) listacorpo -> . corpo listacorpo
+    (25) empty -> .
+    (4) corpo -> . declaracao
+    (5) corpo -> . atribuicao
+    (6) corpo -> . loop
+    (7) corpo -> . direcao
+    (8) corpo -> . movimenta
+    (9) corpo -> . iniciarobo
+    (10) corpo -> . break
+    (11) corpo -> . condicional
+    (12) corpo -> . parar
+    (13) corpo -> . mostrar
+    (14) corpo -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (42) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (62) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (54) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 22
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    LIGA_ROBO       shift and go to state 6
+    BREAK           shift and go to state 12
+    IF              shift and go to state 9
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    iniciarobo                     shift and go to state 7
+    condicional                    shift and go to state 18
+    listacorpo                     shift and go to state 115
+    corpo                          shift and go to state 11
+    direcao                        shift and go to state 23
+    declaracao                     shift and go to state 15
+    mostrar                        shift and go to state 27
+    parar                          shift and go to state 25
+    movimenta                      shift and go to state 26
+    break                          shift and go to state 16
+    loop                           shift and go to state 28
+    atribuicao                     shift and go to state 29
+    empty                          shift and go to state 114
+    comentario                     shift and go to state 8
+
+state 107
+
+    (58) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE . A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 116
+
+
+state 108
+
+    (47) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE . A_CHAVES listacorpo_robo_on F_CHAVES
+    (49) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE . A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 117
+
+
+state 109
+
+    (46) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE . A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE . A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 118
+
+
+state 110
+
+    (56) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty . F_CHAVES
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty . F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    F_CHAVES        shift and go to state 119
+
+
+state 111
+
+    (54) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo . F_CHAVES
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo . F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+
+    F_CHAVES        shift and go to state 120
+
+
+state 112
+
+    (45) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty . F_CHAVES
+
+    F_CHAVES        shift and go to state 121
+
+
+state 113
+
+    (43) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo . F_CHAVES
+
+    F_CHAVES        shift and go to state 122
+
+
+state 114
+
+    (44) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty . F_CHAVES
+
+    F_CHAVES        shift and go to state 123
+
+
+state 115
+
+    (42) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo . F_CHAVES
+
+    F_CHAVES        shift and go to state 124
+
+
+state 116
+
+    (58) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . empty F_CHAVES
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES . empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (28) listacorpo_robo_on -> . corpo_robo_on
+    (29) listacorpo_robo_on -> . corpo_robo_on listacorpo_robo_on
+    (25) empty -> .
+    (15) corpo_robo_on -> . declaracao
+    (16) corpo_robo_on -> . atribuicao
+    (17) corpo_robo_on -> . loop_robo_on
+    (18) corpo_robo_on -> . direcao
+    (19) corpo_robo_on -> . movimenta
+    (20) corpo_robo_on -> . break
+    (21) corpo_robo_on -> . condicional_robo_on
+    (22) corpo_robo_on -> . parar
+    (23) corpo_robo_on -> . mostrar
+    (24) corpo_robo_on -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (46) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (58) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 53
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    BREAK           shift and go to state 12
+    IF              shift and go to state 47
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    condicional_robo_on            shift and go to state 45
+    listacorpo_robo_on             shift and go to state 125
+    direcao                        shift and go to state 52
+    declaracao                     shift and go to state 54
+    mostrar                        shift and go to state 57
+    parar                          shift and go to state 55
+    movimenta                      shift and go to state 56
+    break                          shift and go to state 59
+    loop_robo_on                   shift and go to state 58
+    atribuicao                     shift and go to state 48
+    empty                          shift and go to state 126
+    corpo_robo_on                  shift and go to state 50
+    comentario                     shift and go to state 51
+
+state 117
+
+    (47) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES . listacorpo_robo_on F_CHAVES
+    (49) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES . empty F_CHAVES
+    (28) listacorpo_robo_on -> . corpo_robo_on
+    (29) listacorpo_robo_on -> . corpo_robo_on listacorpo_robo_on
+    (25) empty -> .
+    (15) corpo_robo_on -> . declaracao
+    (16) corpo_robo_on -> . atribuicao
+    (17) corpo_robo_on -> . loop_robo_on
+    (18) corpo_robo_on -> . direcao
+    (19) corpo_robo_on -> . movimenta
+    (20) corpo_robo_on -> . break
+    (21) corpo_robo_on -> . condicional_robo_on
+    (22) corpo_robo_on -> . parar
+    (23) corpo_robo_on -> . mostrar
+    (24) corpo_robo_on -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (46) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (58) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 53
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    BREAK           shift and go to state 12
+    IF              shift and go to state 47
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    condicional_robo_on            shift and go to state 45
+    listacorpo_robo_on             shift and go to state 127
+    direcao                        shift and go to state 52
+    declaracao                     shift and go to state 54
+    mostrar                        shift and go to state 57
+    parar                          shift and go to state 55
+    movimenta                      shift and go to state 56
+    break                          shift and go to state 59
+    loop_robo_on                   shift and go to state 58
+    atribuicao                     shift and go to state 48
+    empty                          shift and go to state 128
+    corpo_robo_on                  shift and go to state 50
+    comentario                     shift and go to state 51
+
+state 118
+
+    (46) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES . listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES . empty F_CHAVES
+    (28) listacorpo_robo_on -> . corpo_robo_on
+    (29) listacorpo_robo_on -> . corpo_robo_on listacorpo_robo_on
+    (25) empty -> .
+    (15) corpo_robo_on -> . declaracao
+    (16) corpo_robo_on -> . atribuicao
+    (17) corpo_robo_on -> . loop_robo_on
+    (18) corpo_robo_on -> . direcao
+    (19) corpo_robo_on -> . movimenta
+    (20) corpo_robo_on -> . break
+    (21) corpo_robo_on -> . condicional_robo_on
+    (22) corpo_robo_on -> . parar
+    (23) corpo_robo_on -> . mostrar
+    (24) corpo_robo_on -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (46) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (58) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 53
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    BREAK           shift and go to state 12
+    IF              shift and go to state 47
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    condicional_robo_on            shift and go to state 45
+    listacorpo_robo_on             shift and go to state 129
+    direcao                        shift and go to state 52
+    declaracao                     shift and go to state 54
+    mostrar                        shift and go to state 57
+    parar                          shift and go to state 55
+    movimenta                      shift and go to state 56
+    break                          shift and go to state 59
+    loop_robo_on                   shift and go to state 58
+    atribuicao                     shift and go to state 48
+    empty                          shift and go to state 130
+    corpo_robo_on                  shift and go to state 50
+    comentario                     shift and go to state 51
+
+state 119
+
+    (56) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES . ELSE A_CHAVES empty F_CHAVES
+
+    TIPO_VAR        reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    LIGA_ROBO       reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 56 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    ELSE            shift and go to state 131
+
+
+state 120
+
+    (54) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES . ELSE A_CHAVES listacorpo F_CHAVES
+
+    TIPO_VAR        reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    VARIAVEL        reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    WHILE           reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    DIR_ROBO        reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    MOVE_ROBO       reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    LIGA_ROBO       reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    BREAK           reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    IF              reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    PARAR           reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    EXIBA           reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    COMENTARIO      reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    F_CHAVES        reduce using rule 54 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    ELSE            shift and go to state 132
+
+
+state 121
+
+    (45) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .
+
+    TIPO_VAR        reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    LIGA_ROBO       reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 45 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+
+
+state 122
+
+    (43) loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .
+
+    TIPO_VAR        reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    VARIAVEL        reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    WHILE           reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    DIR_ROBO        reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    MOVE_ROBO       reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    LIGA_ROBO       reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    BREAK           reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    IF              reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    PARAR           reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    EXIBA           reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    COMENTARIO      reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    F_CHAVES        reduce using rule 43 (loop -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+
+
+state 123
+
+    (44) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .
+
+    TIPO_VAR        reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    LIGA_ROBO       reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 44 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+
+
+state 124
+
+    (42) loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .
+
+    TIPO_VAR        reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    VARIAVEL        reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    WHILE           reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    DIR_ROBO        reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    MOVE_ROBO       reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    LIGA_ROBO       reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    BREAK           reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    IF              reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    PARAR           reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    EXIBA           reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    COMENTARIO      reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+    F_CHAVES        reduce using rule 42 (loop -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES .)
+
+
+state 125
+
+    (58) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on . F_CHAVES
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on . F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+
+    F_CHAVES        shift and go to state 133
+
+
+state 126
+
+    (60) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty . F_CHAVES
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty . F_CHAVES ELSE A_CHAVES empty F_CHAVES
+
+    F_CHAVES        shift and go to state 134
+
+
+state 127
+
+    (47) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on . F_CHAVES
+
+    F_CHAVES        shift and go to state 135
+
+
+state 128
+
+    (49) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty . F_CHAVES
+
+    F_CHAVES        shift and go to state 136
+
+
+state 129
+
+    (46) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on . F_CHAVES
+
+    F_CHAVES        shift and go to state 137
+
+
+state 130
+
+    (48) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty . F_CHAVES
+
+    F_CHAVES        shift and go to state 138
+
+
+state 131
+
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE . A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 139
+
+
+state 132
+
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE . A_CHAVES listacorpo F_CHAVES
+
+    A_CHAVES        shift and go to state 140
+
+
+state 133
+
+    (58) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES . ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+
+    TIPO_VAR        reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    VARIAVEL        reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    WHILE           reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DIR_ROBO        reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    MOVE_ROBO       reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    BREAK           reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    IF              reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    PARAR           reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    EXIBA           reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    COMENTARIO      reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    F_CHAVES        reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 58 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    ELSE            shift and go to state 141
+
+
+state 134
+
+    (60) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES . ELSE A_CHAVES empty F_CHAVES
+
+    TIPO_VAR        reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 60 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    ELSE            shift and go to state 142
+
+
+state 135
+
+    (47) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .
+
+    TIPO_VAR        reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    VARIAVEL        reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    WHILE           reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DIR_ROBO        reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    MOVE_ROBO       reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    BREAK           reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    IF              reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    PARAR           reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    EXIBA           reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    COMENTARIO      reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    F_CHAVES        reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 47 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+
+
+state 136
+
+    (49) loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .
+
+    TIPO_VAR        reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 49 (loop_robo_on -> WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES .)
+
+
+state 137
+
+    (46) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .
+
+    TIPO_VAR        reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    VARIAVEL        reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    WHILE           reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DIR_ROBO        reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    MOVE_ROBO       reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    BREAK           reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    IF              reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    PARAR           reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    EXIBA           reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    COMENTARIO      reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    F_CHAVES        reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 46 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES .)
+
+
+state 138
+
+    (48) loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .
+
+    TIPO_VAR        reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 48 (loop_robo_on -> WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES .)
+
+
+state 139
+
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES . empty F_CHAVES
+    (25) empty -> .
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+
+    empty                          shift and go to state 143
+
+state 140
+
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES . listacorpo F_CHAVES
+    (26) listacorpo -> . corpo
+    (27) listacorpo -> . corpo listacorpo
+    (4) corpo -> . declaracao
+    (5) corpo -> . atribuicao
+    (6) corpo -> . loop
+    (7) corpo -> . direcao
+    (8) corpo -> . movimenta
+    (9) corpo -> . iniciarobo
+    (10) corpo -> . break
+    (11) corpo -> . condicional
+    (12) corpo -> . parar
+    (13) corpo -> . mostrar
+    (14) corpo -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (42) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (43) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (44) loop -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (45) loop -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (62) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+    (63) iniciarobo -> . LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (54) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+    (55) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+    (56) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (57) condicional -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 22
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    LIGA_ROBO       shift and go to state 6
+    BREAK           shift and go to state 12
+    IF              shift and go to state 9
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    iniciarobo                     shift and go to state 7
+    condicional                    shift and go to state 18
+    direcao                        shift and go to state 23
+    corpo                          shift and go to state 11
+    listacorpo                     shift and go to state 144
+    declaracao                     shift and go to state 15
+    mostrar                        shift and go to state 27
+    parar                          shift and go to state 25
+    movimenta                      shift and go to state 26
+    break                          shift and go to state 16
+    loop                           shift and go to state 28
+    atribuicao                     shift and go to state 29
+    comentario                     shift and go to state 8
+
+state 141
+
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE . A_CHAVES listacorpo_robo_on F_CHAVES
+
+    A_CHAVES        shift and go to state 145
+
+
+state 142
+
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE . A_CHAVES empty F_CHAVES
+
+    A_CHAVES        shift and go to state 146
+
+
+state 143
+
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty . F_CHAVES
+
+    F_CHAVES        shift and go to state 147
+
+
+state 144
+
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo . F_CHAVES
+
+    F_CHAVES        shift and go to state 148
+
+
+state 145
+
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES . listacorpo_robo_on F_CHAVES
+    (28) listacorpo_robo_on -> . corpo_robo_on
+    (29) listacorpo_robo_on -> . corpo_robo_on listacorpo_robo_on
+    (15) corpo_robo_on -> . declaracao
+    (16) corpo_robo_on -> . atribuicao
+    (17) corpo_robo_on -> . loop_robo_on
+    (18) corpo_robo_on -> . direcao
+    (19) corpo_robo_on -> . movimenta
+    (20) corpo_robo_on -> . break
+    (21) corpo_robo_on -> . condicional_robo_on
+    (22) corpo_robo_on -> . parar
+    (23) corpo_robo_on -> . mostrar
+    (24) corpo_robo_on -> . comentario
+    (30) declaracao -> . TIPO_VAR VARIAVEL QUEBRA_LINHA
+    (31) atribuicao -> . VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+    (32) atribuicao -> . VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+    (33) atribuicao -> . VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+    (34) atribuicao -> . VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+    (46) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (47) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (48) loop_robo_on -> . WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (49) loop_robo_on -> . WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+    (65) direcao -> . DIR_ROBO QUEBRA_LINHA
+    (67) movimenta -> . MOVE_ROBO QUEBRA_LINHA
+    (64) break -> . BREAK QUEBRA_LINHA
+    (58) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+    (59) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+    (60) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+    (61) condicional_robo_on -> . IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+    (66) parar -> . PARAR QUEBRA_LINHA
+    (68) mostrar -> . EXIBA STRING QUEBRA_LINHA
+    (69) mostrar -> . EXIBA VARIAVEL QUEBRA_LINHA
+    (70) mostrar -> . EXIBA NUMERO QUEBRA_LINHA
+    (71) comentario -> . COMENTARIO
+
+    TIPO_VAR        shift and go to state 17
+    VARIAVEL        shift and go to state 21
+    WHILE           shift and go to state 53
+    DIR_ROBO        shift and go to state 13
+    MOVE_ROBO       shift and go to state 20
+    BREAK           shift and go to state 12
+    IF              shift and go to state 47
+    PARAR           shift and go to state 19
+    EXIBA           shift and go to state 24
+    COMENTARIO      shift and go to state 3
+
+    condicional_robo_on            shift and go to state 45
+    listacorpo_robo_on             shift and go to state 149
+    direcao                        shift and go to state 52
+    declaracao                     shift and go to state 54
+    mostrar                        shift and go to state 57
+    parar                          shift and go to state 55
+    movimenta                      shift and go to state 56
+    break                          shift and go to state 59
+    loop_robo_on                   shift and go to state 58
+    atribuicao                     shift and go to state 48
+    comentario                     shift and go to state 51
+    corpo_robo_on                  shift and go to state 50
+
+state 146
+
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES . empty F_CHAVES
+    (25) empty -> .
+
+    F_CHAVES        reduce using rule 25 (empty -> .)
+
+    empty                          shift and go to state 150
+
+state 147
+
+    (57) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .
+
+    TIPO_VAR        reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    LIGA_ROBO       reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 57 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+
+
+state 148
+
+    (55) condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .
+
+    TIPO_VAR        reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    VARIAVEL        reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    WHILE           reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    DIR_ROBO        reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    MOVE_ROBO       reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    LIGA_ROBO       reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    BREAK           reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    IF              reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    PARAR           reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    EXIBA           reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    COMENTARIO      reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+    F_CHAVES        reduce using rule 55 (condicional -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES .)
+
+
+state 149
+
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on . F_CHAVES
+
+    F_CHAVES        shift and go to state 151
+
+
+state 150
+
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty . F_CHAVES
+
+    F_CHAVES        shift and go to state 152
+
+
+state 151
+
+    (59) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .
+
+    TIPO_VAR        reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    VARIAVEL        reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    WHILE           reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DIR_ROBO        reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    MOVE_ROBO       reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    BREAK           reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    IF              reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    PARAR           reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    EXIBA           reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    COMENTARIO      reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    F_CHAVES        reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 59 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES .)
+
+
+state 152
+
+    (61) condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .
+
+    TIPO_VAR        reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    VARIAVEL        reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    WHILE           reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    DIR_ROBO        reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    MOVE_ROBO       reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    BREAK           reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    IF              reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    PARAR           reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    EXIBA           reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    COMENTARIO      reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    F_CHAVES        reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+    DESLIGA_ROBO    reduce using rule 61 (condicional_robo_on -> IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES .)
+

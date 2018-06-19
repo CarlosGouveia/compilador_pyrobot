@@ -212,6 +212,7 @@ def compilar(request):
     if request.method == 'POST':
         codigo = request.POST.get('codigo')
 
+
         #############################################################################################################
         ############################################# ANÁLISE LÉXICA ################################################
         #############################################################################################################
@@ -247,7 +248,7 @@ def compilar(request):
         ] + list(reserved.values())
 
         t_STRING = r'\["[^\"\]]*"\]'
-        t_COMENTARIO = r"[\/][\*]+[\w\W]+[\*]+[\/]"
+        t_COMENTARIO = r"[\/\*][^\\]+[\\]"
         t_A_PARENTE = r"\("
         t_F_PARENTE = r"\)"
         t_OP_RELACIONAL = r"((<=){1})|((>=){1})|((==){1})|((!=){1})|((<){1})|((>){1})"
@@ -322,14 +323,20 @@ def compilar(request):
             ############################################# ANÁLISE SINTÁTICA #############################################
             #############################################################################################################
 
+            # precedence = (
+            # 	('left', 'begin'),
+            # 	('right', 'end')
+            # )
+
             names = {}
 
             # NOVA GRAMATICA
 
             def p_programa(t):
                 '''programa : INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE
-                             | INI_CODE A_CHAVES empty F_CHAVES FIM_CODE
-                 '''
+            				| INI_CODE A_CHAVES empty F_CHAVES FIM_CODE
+            				| comentario
+            	'''
 
             def p_corpo(t):
                 '''corpo : declaracao
@@ -341,64 +348,105 @@ def compilar(request):
                         | break
                         | condicional
                         | parar
+            			| mostrar
+            			| comentario
                 '''
 
-            def p_corpo1(t):
-                '''corpo1 : declaracao
+            def p_corpo_robo_on(t):
+                '''corpo_robo_on : declaracao
                         | atribuicao
-                        | loop
+                        | loop_robo_on
                         | direcao
                         | movimenta
                         | break
-                        | condicional
+                        | condicional_robo_on
                         | parar
+            			| mostrar
+            			| comentario
                 '''
 
             def p_empty(t):
                 'empty : '
+                pass
 
             def p_listacorpo(t):
                 '''listacorpo : corpo
                             | corpo listacorpo
                 '''
 
-            def p_listacorpo1(t):
-                '''listacorpo1 : corpo1
-                            | corpo1 listacorpo1
+            def p_listacorpo_robo_on(t):
+                '''listacorpo_robo_on : corpo_robo_on
+                            | corpo_robo_on listacorpo_robo_on
                 '''
 
             def p_declaracao(t):
                 'declaracao : TIPO_VAR VARIAVEL QUEBRA_LINHA'
 
             def p_atribuicao(t):
-                'atribuicao : VARIAVEL ATRIBUIR expressao QUEBRA_LINHA'
+                '''atribuicao : VARIAVEL ATRIBUIR operacao QUEBRA_LINHA
+            				| VARIAVEL ATRIBUIR expressao_str QUEBRA_LINHA
+            				| VARIAVEL ATRIBUIR expressao QUEBRA_LINHA
+            				| VARIAVEL ATRIBUIR booleano QUEBRA_LINHA
+            	'''
 
-            def p_expressao(t):
-                'expressao : expressao OP_ARITMETICO expressao'
+            def p_operacao(t):
+                '''operacao : expressao OP_ARITMETICO expressao
+            				| expressao OP_ARITMETICO operacao
+            	'''
 
             def p_expressao_num(t):
-                'expressao : NUMERO'
+                '''expressao : NUMERO
+            				| NUM_FLOAT
+            	'''
 
             def p_expressao_var(t):
                 'expressao : VARIAVEL'
 
+            def p_expressao_string(t):
+                'expressao_str : STRING'
+
+            def p_expressao_boolean(t):
+                'booleano : TIPO_BOOL'
+
             def p_loop(t):
                 '''loop : WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
                         | WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+            			| WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+                        | WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
+                '''
+
+            def p_loop_robo_on(t):
+                '''loop_robo_on : WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+                        		| WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+            					| WHILE A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+                        		| WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES empty F_CHAVES
                 '''
 
             def p_comparacao(t):
                 '''comparacao : VARIAVEL OP_RELACIONAL NUMERO
                             | VARIAVEL OP_RELACIONAL VARIAVEL
+            				| VARIAVEL OP_RELACIONAL NUM_FLOAT
+            				| VARIAVEL OP_RELACIONAL TIPO_BOOL
                 '''
 
             def p_condicional(t):
                 '''condicional : IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
                             | IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
-                '''
+            				| IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+                            | IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+            	'''
+
+            def p_condicional_robo_on(t):
+                '''condicional_robo_on : IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES
+                            		| IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo_robo_on F_CHAVES ELSE A_CHAVES listacorpo_robo_on F_CHAVES
+            						| IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES
+                            		| IF A_PARENTE comparacao F_PARENTE A_CHAVES empty F_CHAVES ELSE A_CHAVES empty F_CHAVES
+            	'''
 
             def p_iniciarobo(t):
-                'iniciarobo : LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA'
+                '''iniciarobo : LIGA_ROBO QUEBRA_LINHA listacorpo_robo_on DESLIGA_ROBO QUEBRA_LINHA
+            				| LIGA_ROBO QUEBRA_LINHA empty DESLIGA_ROBO QUEBRA_LINHA
+            	'''
 
             def p_break(t):
                 'break : BREAK QUEBRA_LINHA'
@@ -411,6 +459,15 @@ def compilar(request):
 
             def p_movimenta(t):
                 'movimenta : MOVE_ROBO QUEBRA_LINHA'
+
+            def p_mostrar(t):
+                '''mostrar : EXIBA STRING QUEBRA_LINHA
+                            | EXIBA VARIAVEL QUEBRA_LINHA
+                            | EXIBA NUMERO QUEBRA_LINHA
+                '''
+
+            def p_comentario(t):
+                'comentario : COMENTARIO'
 
             def p_error(t):
                 # erro = ""
@@ -428,7 +485,10 @@ def compilar(request):
             import ply.yacc as yacc
             parser = yacc.yacc()
 
-            parser.parse(code)
+            if not code:
+                print("Erro ao receber dados")
+            else:
+                parser.parse(code)
 
             if len(listaErroSintatico) == 0:
                 tmp = 'Compilacao terminada sem erro sintatico!'
