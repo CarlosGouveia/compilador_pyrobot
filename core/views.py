@@ -3,7 +3,6 @@ import ply.lex as lex
 from django.shortcuts import render, redirect
 from .forms import cpf_form, expressao_form, compilador_form
 from django.contrib import messages
-from django.core.files.uploadedfile import UploadedFile
 
 def home(request):
     return render(request, 'home.html')
@@ -204,81 +203,74 @@ def gerarposfixa(request):
 
 def compilar(request):
 
-    context = {}
-    lista = []
-
-    # arquivo = UploadedFile(open('static/arquivo.txt', 'r'), 'arquivo.txt')
-    # unica_linha = arquivo.read()
-    # arquivo.close()
-
-    # print(unica_linha)
+    context            = {}
+    lista              = []
+    listaErro          = []
+    listaErroSintatico = []
+    listaSintaxe       = []
 
     if request.method == 'POST':
         codigo = request.POST.get('codigo')
 
-        # print(type(codigo))
-        # print(codigo)
+        #############################################################################################################
+        ############################################# ANÁLISE LÉXICA ################################################
+        #############################################################################################################
 
         reserved = {
-            'begin': 'ini_code',
-            'end': 'fim_code',
-            'start': 'liga_robo',
-            'off': 'desliga_robo',
-            'stop': 'parar',
-            'if': 'if',
-            'else': 'else',
-            'elif': 'elif',
-            'loop': 'while',
-            'break': 'break',
-            'return': 'retorno',
-            'print': 'exiba',
+            'begin': 'INI_CODE',
+            'end': 'FIM_CODE',
+            'start': 'LIGA_ROBO',
+            'off': 'DESLIGA_ROBO',
+            'stop': 'PARAR',
+            'if': 'IF',
+            'else': 'ELSE',
+            'loop': 'WHILE',
+            'break': 'BREAK',
+            'print': 'EXIBA',
         }
 
         tokens = [
-                     'comentario',
-                     'op_relacional', 'op_aritmetico',
-                     'a_parente', 'f_parente',
-                     'a_chaves', 'f_chaves',
-                     'a_colchetes', 'f_colchetes',
-                     'quebra_linha',
-                     'tip_bool',
-                     'tipo_var',
-                     'numero',
-                     'string',
-                     'atribuir',
-                     'variavel',
-                     'dir_robo',
-                     'move_robo',
-                     'RESERVED',
-                 ] + list(reserved.values())
+             'COMENTARIO',
+             'OP_RELACIONAL', 'OP_ARITMETICO',
+             'A_PARENTE', 'F_PARENTE',
+             'A_CHAVES', 'F_CHAVES',
+             'QUEBRA_LINHA',
+             'TIPO_BOOL',
+             'TIPO_VAR',
+             'NUM_FLOAT',
+             'STRING',
+             'NUMERO',
+             'ATRIBUIR',
+             'VARIAVEL',
+             'DIR_ROBO',
+             'MOVE_ROBO',
+        ] + list(reserved.values())
 
-        t_comentario = r"[\/][\*]+[\w\W]+[\*]+[\/]"
-        t_string = r"[\"]+[\w\W]+[\"]"
-        t_a_parente = r"\("
-        t_f_parente = r"\)"
-        t_op_relacional = r"((<=){1})|((>=){1})|((==){1})|((!=){1})|((<){1})|((>){1})"
-        t_op_aritmetico = r"[\+|\-|\/|\*]"
-        t_atribuir = r"="
-        t_a_chaves = r"[\{]"
-        t_f_chaves = r"[\}]"
-        t_a_colchetes = r"[\[]"
-        t_f_colchetes = r"[\]]"
-        t_quebra_linha = r";+"
-        t_tip_bool = r"(false)|(true)"
-        t_tipo_var = r"(int)|(float)|(bool)|(str)"
-        t_numero = r"[\d]+"
-        t_variavel = r"(var_)[\d]+"
-        t_dir_robo = r"(right)|(left)"
-        t_move_robo = r"(forward)|(backward)"
+        t_STRING = r'\["[^\"\]]*"\]'
+        t_COMENTARIO = r"[\/][\*]+[\w\W]+[\*]+[\/]"
+        t_A_PARENTE = r"\("
+        t_F_PARENTE = r"\)"
+        t_OP_RELACIONAL = r"((<=){1})|((>=){1})|((==){1})|((!=){1})|((<){1})|((>){1})"
+        t_OP_ARITMETICO = r"[\+|\-|\/|\*]"
+        t_ATRIBUIR = r"="
+        t_A_CHAVES = r"[\{]"
+        t_F_CHAVES = r"[\}]"
+        t_QUEBRA_LINHA = r";+"
+        t_TIPO_BOOL = r"(false)|(true)"
+        t_TIPO_VAR = r"(int)|(float)|(bool)|(str)"
+        t_NUMERO = r"[\d]+"
+        t_NUM_FLOAT = r"[\d]+\.[\d]{0,5}"
+        t_VARIAVEL = r"(var_)[\d]+"
+        t_DIR_ROBO = r"(right)|(left)"
+        t_MOVE_ROBO = r"(forward)|(backward)"
 
         def t_RESERVED(t):
-            r"(begin)|(end)|(start)|(off)|(right)|(left)|(stop)|(if)|(else)|(elif)|(loop)|(break)|(return)|(print)"
+            r"(begin)|(end)|(start)|(off)|(stop)|(if)|(else)|(loop)|(break)|(print)"
             t.type = reserved.get(t.value, 'RESERVED')
             return t
 
         # Regra para quebra de linhas(rastrear)
         def t_newline(t):
-            # t.lexer.lineno = 0
             r'\n+'
             t.lexer.lineno += len(t.value)
 
@@ -288,32 +280,185 @@ def compilar(request):
         # Erro ao manipular regra
         def t_error(t):
             erro = ''
-            erro = "Illegal character '{0}' na linha {1} coluna {2}".format(t.value[0], t.lineno, t.lexpos)
+            erro = "Illegal character '{0}' na linha {1} coluna {2}".format(t.value[0], t.lineno, find_column(code, t))
+
             lista.append(erro)
+            listaErro.append(erro)
             t.lexer.skip(1)
+
+        def find_column(input,tok):
+            inicio = input.rfind('\n', 0, tok.lexpos) + 1
+            coluna = (tok.lexpos - inicio) + 1
+            return coluna
 
         # Constrói o lexer
         lexer = lex.lex()
 
-        code = codigo.split('\r')
+        code = codigo
 
-        for i in range(len(code)):
-            # print(code[i])
-            lexer.input(code[i])
+        lexer.input(code)
 
-            # Tokenize
-            while True:
+        # Tokenize
+        while True:
 
-                tok = lexer.token()
-                # print(tok)
-                token = ''
-                if tok:
-                    lista.append(str(tok))
-                else:
-                    break
+            tok = lexer.token()
+            token = ''
+            if tok:
+                toke = ""
+                toke = 'LexToken(' + str(tok.type) + ',' + str(tok.value) + ',' + str(tok.lineno) + ',' + str(find_column(code, tok)) + ')'
+                lista.append(toke)
+            else:
+                break
+
+        if len(listaErro) == 0:
+            tmp = ' Compilacao terminada sem erro lexico!'
+            tmp2 ='---------------------------------------------------'
+            lista.reverse()
+            lista.append(tmp2)
+            lista.append(tmp)
+            lista.reverse()
+
+            #############################################################################################################
+            ############################################# ANÁLISE SINTÁTICA #############################################
+            #############################################################################################################
+
+            names = {}
+
+            # NOVA GRAMATICA
+
+            def p_programa(t):
+                '''programa : INI_CODE A_CHAVES listacorpo F_CHAVES FIM_CODE
+                             | INI_CODE A_CHAVES empty F_CHAVES FIM_CODE
+                 '''
+
+            def p_corpo(t):
+                '''corpo : declaracao
+                        | atribuicao
+                        | loop
+                        | direcao
+                        | movimenta
+                        | iniciarobo
+                        | break
+                        | condicional
+                        | parar
+                '''
+
+            def p_corpo1(t):
+                '''corpo1 : declaracao
+                        | atribuicao
+                        | loop
+                        | direcao
+                        | movimenta
+                        | break
+                        | condicional
+                        | parar
+                '''
+
+            def p_empty(t):
+                'empty : '
+
+            def p_listacorpo(t):
+                '''listacorpo : corpo
+                            | corpo listacorpo
+                '''
+
+            def p_listacorpo1(t):
+                '''listacorpo1 : corpo1
+                            | corpo1 listacorpo1
+                '''
+
+            def p_declaracao(t):
+                'declaracao : TIPO_VAR VARIAVEL QUEBRA_LINHA'
+
+            def p_atribuicao(t):
+                'atribuicao : VARIAVEL ATRIBUIR expressao QUEBRA_LINHA'
+
+            def p_expressao(t):
+                'expressao : expressao OP_ARITMETICO expressao'
+
+            def p_expressao_num(t):
+                'expressao : NUMERO'
+
+            def p_expressao_var(t):
+                'expressao : VARIAVEL'
+
+            def p_loop(t):
+                '''loop : WHILE A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+                        | WHILE A_PARENTE TIPO_BOOL F_PARENTE A_CHAVES listacorpo F_CHAVES
+                '''
+
+            def p_comparacao(t):
+                '''comparacao : VARIAVEL OP_RELACIONAL NUMERO
+                            | VARIAVEL OP_RELACIONAL VARIAVEL
+                '''
+
+            def p_condicional(t):
+                '''condicional : IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES
+                            | IF A_PARENTE comparacao F_PARENTE A_CHAVES listacorpo F_CHAVES ELSE A_CHAVES listacorpo F_CHAVES
+                '''
+
+            def p_iniciarobo(t):
+                'iniciarobo : LIGA_ROBO QUEBRA_LINHA listacorpo1 DESLIGA_ROBO QUEBRA_LINHA'
+
+            def p_break(t):
+                'break : BREAK QUEBRA_LINHA'
+
+            def p_direcao(t):
+                'direcao : DIR_ROBO QUEBRA_LINHA'
+
+            def p_parar(t):
+                'parar : PARAR QUEBRA_LINHA'
+
+            def p_movimenta(t):
+                'movimenta : MOVE_ROBO QUEBRA_LINHA'
+
+            def p_error(t):
+                # erro = ""
+                erro = 'LexToken(' + str(t.type) + ',' + str(t.value) + ',' + str(t.lexer.lineno - num_linha()) + ')'
+                listaSintaxe.append(erro)
+                listaErroSintatico.append(str(t))
+
+            def num_linha():
+                cont = 0
+                for i in code:
+                    if i == '\n':
+                        cont += 1
+                return cont
+
+            import ply.yacc as yacc
+            parser = yacc.yacc()
+
+            parser.parse(code)
+
+            if len(listaErroSintatico) == 0:
+                tmp = 'Compilacao terminada sem erro sintatico!'
+                tmp2 = '-----------------------------------------------------'
+                listaSintaxe.reverse()
+                listaSintaxe.append(tmp2)
+                listaSintaxe.append(tmp)
+                listaSintaxe.reverse()
+            else:
+
+                tmp = '!Compilacao terminada com erro sintatico'
+                tmp2 = '-----------------------------------------------------'
+                listaSintaxe.reverse()
+                listaSintaxe.append(tmp2)
+                listaSintaxe.append(tmp)
+                listaSintaxe.reverse()
+
+        else:
+            tmp = '!Compilacao terminada com erro lexico'
+            tmp2 = '------------------------------------------------------'
+            lista.reverse()
+            lista.append(tmp2)
+            lista.append(tmp)
+            lista.reverse()
+
+            listaSintaxe.append(tmp2)
 
 
     context['resposta'] = "\\n".join(lista)
+    context['sintaxe']  = "\\n".join(listaSintaxe)
     l = ""
     flag = 0
     for i in codigo:
@@ -323,6 +468,8 @@ def compilar(request):
         elif i != "\n":
             l += i
             flag = 0
+
     context['codigo'] = l
+
     template_name = 'homecompilador.html'
     return render(request, template_name, context)

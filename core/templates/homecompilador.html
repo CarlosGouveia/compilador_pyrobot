@@ -39,7 +39,7 @@
         }
 
         textarea {
-            width: 755px;
+            width: 775px;
             height: 370px;
             font-size: 20px;
             padding: 10px;
@@ -48,6 +48,19 @@
             border: 1px solid #aaaaaa;
 
         }
+
+        .textarea1 {
+            width: 418px;
+            height: 170px;
+            font-size: 17px;
+            padding: 10px;
+            line-height: 30px;
+            border-radius: 3px;
+            border: 1px solid #aaaaaa;
+
+        }
+
+
 
         code {
             display: block;
@@ -105,7 +118,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2 class="section-heading">PyRobot - Análise Léxica</h2>
+                <h2 class="section-heading">Compilador PyRobot</h2>
                 <hr class="my-4">
             </div>
         </div>
@@ -121,8 +134,15 @@
                     <div class="form-row justify-content-center text-center">
                         <div class="form-group col-md-12">
 
-                            <button class="btn btn-primary btn-xl js-scroll-trigger" type="submit">Compilar</button>
-                            <input type="file" id="inputCSV" onchange="abrirTXT(this)">
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" style="background-color: orangered" type="submit">Compilar</button>
+
+                            <button class="btn btn-primary btn-xl js-scroll-trigger">
+                                <input type="file" id="inputCSV" onchange="abrirTXT(this)">
+                            </button>
+
+                            <button class="btn btn-primary btn-xl js-scroll-trigger" onclick="saveTextAsFile()" type="button">
+                                Dowload
+                            </button>
 
                         </div>
                     </div>
@@ -135,12 +155,39 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="form-row justify-content-center">
-            <div class="form-group col-lg-12">
+    <div class="container" >
+        <div class="form-row" style="align-items: center" >
 
-                <textarea id="mostrar" rows="10" readonly></textarea>
+            <div class="form-group col-md-5">
+                <table border="2">
 
+                    <tr>
+                        <td><h4 style="text-align: center;background-color: orangered;color: white">Resultado/Análise Léxica</h4></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <textarea class="textarea1" id="mostrar" rows="10" readonly></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="col-md-1"></div>
+
+            <div class="form-group col-md-5">
+                <table border="2">
+
+                    <tr>
+                        <td><h4 style="text-align: center;background-color: orangered;color: white">Resultado/Análise Sintática</h4></td>
+                    </tr>
+                    <tr aria-rowspan="4">
+                        <td>
+                            <textarea class="textarea1" id="mostrar1" rows="10" readonly></textarea>
+                        </td>
+                    </tr>
+
+                </table>
             </div>
         </div>
     </div>
@@ -152,10 +199,13 @@
     <script>
         $('document').ready(function () {
             $('#mostrar').text("{{ resposta|safe }}");
+            $('#mostrar1').text("{{ sintaxe|safe }}");
 
             $('#line_numbers').linenumbers({col_width: '15px'});
 
             $('#line_numbers').text("{{ codigo|safe }}");
+
+            $('#line_numbers').focus();
         })
     </script>
 
@@ -187,6 +237,42 @@
                 TXTsaida.innerHTML = arquivo;
                 TXTsaida.focus();
         }
+    </script>
+
+    <script>
+        function saveTextAsFile()
+        {
+            var textToWrite = document.getElementById("line_numbers").value;
+            var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
+            var fileNameToSaveAs = "codePyRobot.txt";
+
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null)
+            {
+                // Chrome allows the link to be clicked
+                // without actually adding it to the DOM.
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            }
+            else
+            {
+                // Firefox requires the link to be added to the DOM
+                // before it can be clicked.
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+
+            downloadLink.click();
+        }
+
+        function destroyClickedElement(event)
+        {
+            document.body.removeChild(event.target);
+        }
+
     </script>
 
 {% endblock %}
